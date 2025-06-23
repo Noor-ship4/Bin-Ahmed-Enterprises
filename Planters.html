@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>PLANTER</title>
+  <style>
+ body {
+  margin: 0;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background: url('17.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
+
+   h1 {
+  text-align: center;
+  color: white;
+}
+
+    .top-buttons {
+      display: flex;
+      justify-content: flex-start;
+      gap: 10px;
+      padding: 10px;
+    }
+    .home-button, .cart-button {
+      font-size: 24px;
+      background-color: #fff;
+      padding: 10px;
+      border-radius: 50%;
+      box-shadow: 0 0 8px rgba(0,0,0,0.2);
+      cursor: pointer;
+      text-decoration: none;
+      color: black;
+    }
+    .home-button:hover, .cart-button:hover {
+      background-color: #eee;
+    }
+    .product-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+    .product-card {
+      background-color: rgba(255, 255, 255, 0.7); /* More transparent */
+      padding: 15px;
+      width: 300px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      text-align: center;
+      position: relative;
+      color: black;
+    }
+    .product-card img {
+      max-width: 100%;
+      height: 200px;
+      object-fit: contain;
+    }
+    .product-card h2 {
+      font-size: 18px;
+      color: #444;
+    }
+    .product-card p {
+      font-size: 14px;
+      color: #333;
+      margin: 5px 0;
+    }
+    .price {
+      font-weight: bold;
+      color: #000;
+      margin-top: 10px;
+    }
+    .btn {
+      margin: 5px;
+      padding: 5px 15px;
+      border: none;
+      background-color: #a94442;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .delete-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: transparent;
+      border: none;
+      font-size: 22px;
+      color: red;
+      cursor: pointer;
+    }
+    .delete-btn:hover {
+      color: darkred;
+    }
+  </style>
+</head>
+<body>
+  <div class="top-buttons">
+    <a class="home-button" href="product.html" title="Back to Home">🏠</a>
+    <a class="cart-button" href="Shopping Cart.html" title="View Cart">🛒</a>
+  </div>
+
+  <h1>PLANTER</h1>
+
+  <div class="product-grid" id="productGrid"></div>
+
+  <script>
+const products = [
+  { id: 1, name: " NURSERY TRAY 1 Pcs. Set", img: "PLANTERS1.jpg", code: "52642", volume: "", description: " 490x300x40", price: "1.000 OMR", packing: "" },
+  { id: 2, name: " HN PLANTER - 3 Pcs. Set", img: "PLANTERS2.jpg", code: "53809", volume: " 0.047 CBM Per Polybag", description: " 495x220x150", price: "5.000 OMR", packing: " 1 Pcs. in Polybag" },
+  { id: 3, name: " HN PLANTER -  3 Pcs. Set", img: "PLANTERS3.jpg", code: "53816", volume: " 0.063 CBM Per Polybag", description: " 645x220x150", price: "7.000 OMR", packing: " 1 Pcs. in Polybag" },
+  { id: 4, name: " HN  RATAN PLANTER -  3 Pcs. Set", img: "PLANTERS4.jpg", code: "53854", volume: " 0.047 CBM Per Polybag", description: " 490x220x150", price: "2.000 OMR", packing:" 1 Pcs. in Polybag" },
+  { id: 5, name: " HN  RATAN PLANTER -  1 Pcs. Set", img: "PLANTERS5.jpg", code: "5386", volume: " 0.062 CBM Per Polybag", description: " 640x220x150", price: "2.000 OMR", packing:" 1 Pcs. in Polybag" },
+  { id: 6, name: " HN  PLANTER - 7 Pcs. Set", img: "PLANTERS6.jpg", code: "53762", volume: " 0.060 CBM Per Polybag", description: " 315x315x275", price: "8.000 OMR", packing: " 1 Pcs. in Polybag" },
+  { id: 7, name: " HN  PLANTER -  7 Pcs. Set", img: "PLANTERS7.jpg", code: "53779", volume: " 0.056 CBM Per Polybag", description: " 280x280x205", price: "8.050 OM", packing: " 1 Pcs. in Polybag" },
+  { id: 8, name: " HN  PLANTER -  1 Pcs. Set", img: "PLANTERS8.jpg", code: "53786", volume: " 0.080 CBM Per Polybag", description: " 330x330x250", price: "1.550 OMR", packing: " 1 Pcs. in Polybag" },
+  { id: 9, name: " HN  PLANTER -  4 Pcs. Set", img: "PLANTERS9.jpg", code: "53793", volume: " 0.125 CBM Per Polybag", description: " 380x380x285", price: "6.050 OMR", packing: " 1 Pcs. in Polybag" },
+  { id: 10, name: " HN  RATAN PLANTER - 4 Pcs. Set", img: "PLANTERS10.jpg", code: "54011", volume: " 0.060 CBM Per Polybag", description: " 315X315X275", price: "1.775 OMR", packing:" 1 Pcs. in Polybag" },
+  { id: 11, name: "HN  RATAN PLANTER - 4 Pcs. Set", img: "PLANTERS11.jpg", code: "53823", volume: " 0.048 CBM Per Polybag", description: " 285x285x200", price: "7.775 OMR", packing:" 1 Pcs. in Polybag" },
+  { id: 12, name: " HN  RATAN PLANTER - 3 Pcs. Set", img: "PLANTERS12.jpg", code: "53830", volume: " 0.080 CBM Per Polybag", description: " 330x330x240", price: "4.775 OMR", packing:" 1 Pcs. in Polybag" },
+  { id: 13, name: "HN  RATAN PLANTER - 2 Pcs. Set", img: "PLANTERS13.jpg", code: "53847", volume: " 0.125 CBM Per Polybag", description: " 390x390x285", price: "2.775 OMR", packing:" 1 Pcs. in Polybag" },
+  { id: 14, name: " HN  PLANTER - 10 Pcs. Set", img: "PLANTERS14.jpg", code: "53731", volume: " 0.091 CBM Per Carton", description: " 115x115x105", price: "7.800 OMR", packing: " 1 Pcs. in Carton" },
+  { id: 15, name: " HN  PLANTER - 6 Pcs. Set", img: "PLANTERS15.jpg", code: "53748", volume: " 0.123 CBM Per Carton", description: " 160x160x160", price: "5.660 OMR", packing: " 1 Pcs. in Carton" },
+  { id: 16, name: " HN  PLANTER - 1", img: "PLANTERS16.jpg", code: "5375", volume: " 0.123 CBM Per Carton", description: " 165x165x140", price: "0.800 OMR", packing: " 1 Pcs. in Carton" },
+  { id: 17, name: " OPERA  PLANTER - 3 Pcs. Set", img: "PLANTERS17.jpg", code: "53632", volume: " 0.072 CBM Per Polybag", description: "440x440x450", price: "10 OMR", packing: " 1 Sets in Polybag" },
+  { id: 18, name: " FLORA  PLANTER - 3 Pcs. Set", img: "PLANTERS18.jpg", code: "53649", volume: " 0.050 CBM Per Polybag", description: " 340x340x480", price: "10 OMR", packing: " 1 Sets in Polybag" }
+];
+
+    const counts = {};
+
+    function renderProducts() {
+      const container = document.getElementById('productGrid');
+      container.innerHTML = "";
+      products.forEach(product => {
+        counts[product.id] = 0;
+        const card = document.createElement("div");
+        card.className = "product-card";
+        card.id = "product-" + product.id;
+        card.innerHTML = `
+          <button class="delete-btn" onclick="decreaseCount(${product.id})">🗑️</button>
+          <img src="${product.img}" alt="${product.name}">
+          <h2>${product.name}</h2>
+          <p><strong>Code:</strong> ${product.code}</p>
+          <p><strong>Volume:</strong> ${product.volume}</p>
+          <p><strong>Size & Capacity:</strong> ${product.description}</p>
+          <p><strong>Packing:</strong> ${product.packing}</p>
+          <p class="price">Price: ${product.price}</p>
+          <p>Selected: <span id="count${product.id}">0</span> times</p>
+          <button class="btn" onclick="increaseCount(${product.id})">Select Product</button>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function increaseCount(id) {
+      counts[id]++;
+      document.getElementById("count" + id).innerText = counts[id];
+      const product = products.find(p => p.id === id);
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      let existing = cart.find(item => item.id === product.id);
+      if (existing) {
+        existing.count += 1;
+      } else {
+        cart.push({
+          id: product.id,
+          name: product.name,
+          price: parseFloat(product.price),
+          count: 1,
+          img: product.img
+        });
+      }
+      localStorage.setItem('cart', JSON.stringify(cart));
+    }
+
+    function decreaseCount(id) {
+      if (counts[id] > 0) {
+        counts[id]--;
+        document.getElementById("count" + id).innerText = counts[id];
+        const product = products.find(p => p.id === id);
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        let index = cart.findIndex(item => item.id === product.id);
+        if (index !== -1) {
+          if (cart[index].count > 1) {
+            cart[index].count--;
+          } else {
+            cart.splice(index, 1);
+          }
+          localStorage.setItem('cart', JSON.stringify(cart));
+        }
+      } else {
+        alert("This product has not been selected yet.");
+      }
+    }
+
+    renderProducts();
+  </script>
+</body>
+</html>

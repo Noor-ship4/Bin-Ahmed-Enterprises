@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Our Offers</title>
+  <style>
+    /* [نفس التنسيقات السابقة بدون تغيير] */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background: url('home2.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: #333;
+      position: relative;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.85);
+      z-index: 0;
+    }
+
+    .top-bar {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 2;
+    }
+
+    .top-bar a {
+      text-decoration: none;
+      color: white;
+      background-color: rgba(255, 0, 0, 0.8);
+      padding: 10px 15px;
+      border-radius: 30px;
+      font-size: 1em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .top-bar a:hover {
+      background-color: rgba(200, 0, 0, 0.9);
+    }
+
+    .top-bar a::before {
+      content: "🏠";
+      font-size: 1.2em;
+    }
+
+    header {
+      background-color: #c43a3a;
+      color: white;
+      padding: 20px 0;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .offers-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      padding: 40px;
+      max-width: 1200px;
+      margin: auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .offer-card {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+
+    .offer-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .offer-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .offer-content {
+      padding: 20px;
+      text-align: center;
+    }
+
+    .offer-content h3 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .price {
+      margin-bottom: 15px;
+    }
+
+    .price del {
+      color: #888;
+      margin-right: 10px;
+    }
+
+    .price span {
+      color: #c43a3a;
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    .offer-content button {
+      padding: 10px 20px;
+      background-color: #c43a3a;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .offer-content button:hover {
+      background-color: #a72e2e;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="overlay"></div>
+
+  <div class="top-bar">
+    <a href="home.html">Home</a>
+  </div>
+
+  <header>
+    <h1>Our Offers</h1>
+  </header>
+
+  <div class="offers-container">
+    <!-- كل بطاقة منتج تحتوي على معلومات المنتج وستُرسل عند الضغط -->
+    <div class="offer-card">
+      <img src="THERMO WARE14.jpg" alt="Product 1">
+      <div class="offer-content">
+        <h3>ZAHRA CASSEROLE - 3500  6 Pcs</h3>
+        <div class="price">
+          <del>11.000 OMR</del>
+          <span>9.050</span>
+        </div>
+        <button onclick="addToCart('THERMO WARE14.jpg', 'ZAHRA CASSEROLE - 3500  6 Pcs', '9.050')">Buy Now</button>
+      </div>
+    </div>
+
+    <div class="offer-card">
+      <img src="PLANTERS1.jpg" alt="Product 2">
+      <div class="offer-content">
+        <h3>NURSERY TRAY  1 Pcs</h3>
+        <div class="price">
+          <del>1.000 OMR</del>
+          <span>0.500</span>
+        </div>
+        <button onclick="addToCart('PLANTERS1.jpg', 'NURSERY TRAY  1 Pcs', '0.500')">Buy Now</button>
+      </div>
+    </div>
+
+    <div class="offer-card">
+      <img src="11.png" alt="Product 3">
+      <div class="offer-content">
+        <h3>BUCKET  2 Pcs</h3>
+        <div class="price">
+          <del>3.500 OMR</del>
+          <span>2.000</span>
+        </div>
+        <button onclick="addToCart('11.png', 'BUCKET  2 Pcs', '2.000')">Buy Now</button>
+      </div>
+    </div>
+
+    <div class="offer-card">
+      <img src="img6.jpg" alt="Product 4">
+      <div class="offer-content">
+        <h3>REHLA HB CONTAINER   2 Pcs</h3>
+        <div class="price">
+          <del>3.600 OMR</del>
+          <span>1.900</span>
+        </div>
+        <button onclick="addToCart('img6.jpg', 'REHLA HB CONTAINER   2 Pcs', '1.900')">Buy Now</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function addToCart(img, name, price) {
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      let existing = cart.find(item => item.name === name);
+      if (existing) {
+        existing.count++;
+      } else {
+        cart.push({ img, name, price, count: 1 });
+      }
+      localStorage.setItem('cart', JSON.stringify(cart));
+      alert('Product added to cart!');
+      window.location.href = 'Shopping Cart.html'; // الانتقال للسلة
+    }
+  </script>
+</body>
+</html>

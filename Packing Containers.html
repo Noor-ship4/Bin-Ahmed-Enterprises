@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>PACKING & CONTAINERS</title>
+  <style>
+ body {
+  margin: 0;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background: url('16.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
+
+   h1 {
+  text-align: center;
+  color: white;
+}
+
+    .top-buttons {
+      display: flex;
+      justify-content: flex-start;
+      gap: 10px;
+      padding: 10px;
+    }
+    .home-button, .cart-button {
+      font-size: 24px;
+      background-color: #fff;
+      padding: 10px;
+      border-radius: 50%;
+      box-shadow: 0 0 8px rgba(0,0,0,0.2);
+      cursor: pointer;
+      text-decoration: none;
+      color: black;
+    }
+    .home-button:hover, .cart-button:hover {
+      background-color: #eee;
+    }
+    .product-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+    .product-card {
+      background-color: rgba(255, 255, 255, 0.7); /* More transparent */
+      padding: 15px;
+      width: 300px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      text-align: center;
+      position: relative;
+      color: black;
+    }
+    .product-card img {
+      max-width: 100%;
+      height: 200px;
+      object-fit: contain;
+    }
+    .product-card h2 {
+      font-size: 18px;
+      color: #444;
+    }
+    .product-card p {
+      font-size: 14px;
+      color: #333;
+      margin: 5px 0;
+    }
+    .price {
+      font-weight: bold;
+      color: #000;
+      margin-top: 10px;
+    }
+    .btn {
+      margin: 5px;
+      padding: 5px 15px;
+      border: none;
+      background-color: #a94442;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .delete-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: transparent;
+      border: none;
+      font-size: 22px;
+      color: red;
+      cursor: pointer;
+    }
+    .delete-btn:hover {
+      color: darkred;
+    }
+  </style>
+</head>
+<body>
+  <div class="top-buttons">
+    <a class="home-button" href="product.html" title="Back to Home">🏠</a>
+    <a class="cart-button" href="Shopping Cart.html" title="View Cart">🛒</a>
+  </div>
+
+  <h1>PACKING & CONTAINERS</h1>
+
+  <div class="product-grid" id="productGrid"></div>
+
+  <script>    const products = [
+
+
+ { id: 1, name:"EASY PACK - 1 PCS.SET", img: "o1.png", code: "50402", volume: "0.054 CBM Per Carton", description: "175x125x100 (500 ml)", packing: "1 Sets. In Carton", price: "0.300 OMR" },
+{ id: 2, name:"EASY PACK -  6 PCS.SET", img: "o2.png", code: "50396", volume: "0.063 CBM Per Carton", description: "175x125x115 (750 ml)", packing: "1 Sets. In Carton", price: "1.500 OMR" },
+{ id: 3, name:"EASY PACK - 10 PCS.SET", img: "o3.png", code: "50389", volume: "0.073 CBM Per Carton", description: "175x125x135 (1 Ltr)", packing: "1 Sets. In Carton", price: "2.000 OMR" },     
+{ id: 4, name:"EASY PACK - 20 PCS.SET", img: "o4.png", code: "50419", volume: "0.072 CBM Per Carton ", description: "175x125x130 (500 ml,750 ml,1 Ltr)", packing: "1 Sets. In Carton", price: "3.000 OMR" },
+
+
+{ id: 5, name:"EASY PACK CONTAINER - 1 Pcs", img: "o5.png", code: "50372", volume: "0.087 CBM Per Carton", description: "(750 ml)", packing: "1 Pcs. In Carton", price: "0.200 OMR" },
+{ id: 6, name:"EASY PACK CONTAINER - 10 Pcs", img: "o6.png", code: "50365", volume: "0.093 CBM Per Carton", description: "(750 ml)", packing: "1 Pcs. In Carton", price: "1.5000 OMR" },
+{ id: 7, name:"EASY PACK CONTAINER -20 Pcs", img: "o7.png", code: "50358", volume: "0.095 CBM Per Carton", description: "(1 ltr)", packing: "1 Pcs. In Carton", price: "2.000 OMR" },
+{ id: 8, name:"EASY PACK CONTAINER - 30 Pcs", img: "o8.png", code: "52949", volume: "0.069 CBM Per Carton", description: "(1.5 ltr)", packing: "1 Pcs. In Carton", price: "3.000 OMR" },
+
+{ id: 9, name:"EASY PACK -1 Pcs", img: "o9.png", code: "52918", volume: "0.095 CBM Per Carton", description: "( 175 ml)", packing: "1 Pcs. In Carton", price: "0.800 OMR" },
+{ id: 10, name:"EASY PACK R - 5 Pcs", img: "o10.png", code: "55025", volume: "0.085 CBM Per Carton", description: "(225 ml)", packing: "1 Pcs. In Carton", price: "2.500 OMR" },
+{ id: 11, name:"EASY PACK R - 10 Pcs", img: "o11.png", code: "51140", volume: "0.089 CBM Per Carton", description: "(250 ml)", packing: "1 Pcs. In Carton", price: "2.5000 OMR" },
+{ id: 12, name:"EASY PACK R -20 Pcs", img: "o12.png", code: "51157", volume: "0.096 CBM Per Carton", description: "(500 ml)", packing: "1 Pcs. In Carton", price: "3.800 OMR" },
+{ id: 13, name:"EASY PACK CONTAINER R -1 Pcs", img: "o13.png", code: "52666", volume: "0.102 CBM Per Carton", description: "(1 ltr)", packing: "1 Pcs. In Carton", price: "0.200 OMR" },
+
+{ id: 14, name:"EASY PACK R -12 Pcs", img: "o14.png", code: "51171", volume: "0.054 CBM Per Carton", description: "390x250x140", packing: "1 Set. In Carton", price: "1.000 OMR" },
+
+{ id: 15, name:"DATES BOX -1 Pcs", img: "o15.png", code: "52611", volume: "0.070 CBM Per Carton", description: "155x155x50", packing: "1 Pcs. In Polybag", price: "1.000 OMR" },
+
+{ id: 16, name:"DATES CONTAINTAINER - 1 Pcs", img: "o16.png", code: "50266", volume: "0.123 CBM Per Carton", description: "123x123x68", packing: "1 Pcs. In Carton", price: "0.900 OMR" },
+{ id: 17, name:"DATES CONTAINTAINER - 3 Pcs", img: "o17.png", code: "50273", volume: "0.123 CBM Per Carton", description: "123x123x90( 250 ml)", packing: "1 Pcs. In Carton", price: "1.500 OMR" },
+{ id: 18, name:"PACK N SEAL CONTAINTAINER- 1 Pcs", img: "o18.png", code: "52602", volume: "0.144 CBM Per Carton", description: "185x185x120", packing: "100 Pcs. In Carton", price: "1.000 OMR" },
+
+{ id: 19, name:"HN OVAL CONTAINTAINER - 1 Pcs", img: "o19.png", code: "53557", volume: "", description: "185x125x75 (650 ML)", packing: "1 Pcs", price: "1.500 OMR" },
+{ id: 20, name:"HN OVAL CONTAINTAINER - 2 Pcs", img: "o20.png", code: "53564", volume: "", description: "290x190x115(2.6 LTR)", packing: "1 Pcs", price: "2.000 OMR" },
+{ id: 21, name:"HN OVAL CONTAINTAINER - 1 Pcs", img: "o21.png", code: "53571", volume: "", description: "395x260x160", packing: "1 Pcs", price: "1.500 OMR" },
+{ id: 22, name:"HN OVAL CONTAINTAINER- 1 Pcs", img: "o22.png", code: "53588", volume: "0.123 Pcs. in Carton", description: "325x225x45", packing: "1 Pcs. in Carton", price: "1.900 OMR" },
+
+
+{ id: 23, name:"HALWA BOWL -1 Pcs ", img: "o23.png", code: "50426", volume: "0.036 CBM Per Polybag", description: "165x165x75", packing: "1 Pcs. In Polybag", price: "2.000 OMR" },
+{ id: 24, name:"HALWA BOWL - 1 Pcs ", img: "o24.png", code: "50433", volume: "0.065 CBM Per Polybag", description: "220x220x98", packing: "1 Pcs. In Polybag", price: "2.000 OMR" },
+{ id: 25, name:"HALWA BOWL - 3 ", img: "o25.png", code: "50440", volume: "100 CBM Per Polybag", description: "270x270x140", packing: "6O Pcs. In Polybag", price: "1.500 OMR" },
+
+
+{ id: 26, name:"HWB BOWL - 2 Pcs", img: "o26.png", code: "51720", volume: "0.102 CBM Per Carton", description: "200x200x90", packing: "1 Pcs. In Carton", price: "2.000 OMR" },
+{ id: 27, name:"HWB BOWL - 1 Pcs", img: "o27.png", code: "50846", volume: "0.055 CBM Per Carton", description: "200x200x90", packing: "1 Pcs. In Carton", price: "0.600 OMR" },
+{ id: 28, name:"HWB BOWL - 2 Pcs", img: "o28.png", code: "51720", volume: "0.102 CBM Per Carton", description: "200x200x90", packing: "1 Pcs. In Carton", price: "1.000 OMR" },
+
+{ id: 29, name:"OLA CONTAINTAINER - 10 Pcs", img: "o29.png", code: "54240", volume: "0.067 CBM Per Carton", description: "225x160x70", packing: "1 Pcs. In Carton", price: "3.000 OMR" },
+{ id: 30, name:"OLA CONTAINTAINER- 1 Pcs", img: "o30.png", code: "54257", volume: "0.097 CBM Per Carton", description: "250x180x85", packing: "1 Pcs. In Carton", price: "0.600 OMR" },
+
+{
+    id: 31,
+    name: "OLA CONTAINTAINER- 3 Pcs",
+    img: "o31.png",
+    code: "54264",
+    volume: "0.140 CBM Per Carton",
+    description: "295x215x105",
+    packing: "1 Pcs. In Carton",
+    price: "1.000 OMR"
+  },
+
+
+{
+    id: 32,
+    name: "AMBER CONTAINTAINER - 10 Pcs",
+    img: "o32.png",
+    code: "54271",
+    volume: "0.163 CBM Per Carton",
+    description: "195x195x150",
+    packing: "1 Pcs. In Carton",
+    price: "3.000 OMR"
+  },
+{
+    id: 33,
+    name: "AMBER CONTAINTAINER - 1 Pcs",
+    img: "o33.png",
+    code: "54288",
+    volume: "0.087 CBM Per Carton",
+    description: "225x225x60",
+    packing: "60 Pcs. In Carton",
+    price: "1.000 OMR"
+  },
+{
+    id: 34,
+    name: "AMBER CONTAINTAINER - 2  Pcs",
+    img: "o34.png",
+    code: "54295",
+    volume: "0.112 CBM Per Carton",
+    description: "240x240x70",
+    packing: "1 Pcs. In Carton",
+    price: "1.800 OMR"
+  },
+{
+    id: 35,
+    name:  "MAJLS CONTAINTAINER -5 Pcs",
+    img: "o35.png",
+    code: "54448",
+    volume: "0.047 CBM Per Carton",
+    description: "220x220x68",
+    packing: "1 Pcs. In Carton",
+    price: "4.000 OMR"
+  },
+{
+    id: 36,
+    name:  "MAJLS CONTAINTAINER - 2 Pcs",
+    img: "o36.png",
+    code: "54875",
+    volume: "0.082 CBM Per Carton",
+    description: "234x234x81",
+    packing: "1 Pcs. In Carton",
+    price: "1.000 OMR"
+  },
+{
+    id: 37,
+    name: "OPTI CONTAINTAINER - 5 Pcs ",
+    img: "o37.png",
+    code: "50280",
+    volume: "0.123 CBM Per Carton",
+    description: "152x120x35",
+    packing: "1 Pcs. In Carton",
+    price: "2.500 OMR"
+  },
+{
+    id: 38,
+    name: "OPTI CONTAINTAINER - 1 Pcs ",
+    img: "o38.png",
+    code: "50297",
+    volume: "0.123 CBM Per Carton",
+    description: "235x255x53",
+    packing: "1 Pcs. In Carton",
+    price: "0.500 OMR"
+  },
+{
+    id: 39,
+    name: "OPTI - DELLA TOFFEE - 4 Pcs",
+    img: "o39.png",
+    code: "54400",
+    volume: "",
+    description: "230x110x50",
+    packing: "1 Pcs",
+    price: "3.500 OMR"
+  },
+{
+    id: 40,
+    name: "OPTI - HONEY - 1 Pcs",
+    img: "o40.png",
+    code: "54424",
+    volume: "",
+    description: "170x80x55",
+    packing: "1 Pcs",
+    price: "1.000 OMR"
+  },
+{
+    id: 41,
+    name: "OPTI - BUTTERFLY - 1 Pcs",
+    img: "o41.png",
+    code: "54417",
+    volume: "",
+    description: "210x210x50",
+    packing: "1 Pcs",
+    price: "1.000 OMR"
+  },
+{
+    id: 42,
+    name: "OPTI - JEWEL- 1 Pcs",
+    img: "o42.png",
+    code: "54431",
+    volume: "",
+    description: "215x115x110",
+    packing: "1 Pcs",
+    price: "1.000 OMR"
+  },
+{
+    id: 43,
+    name: "ICE CUBE TRAY - 1 Pcs.Set",
+    img: "o43.png",
+    code: "51911",
+    volume: "0.048 CBM Per Carton",
+    description: "261x25x30",
+    packing: "1 Sets in Carton",
+    price: "1.500 OMR"
+  },
+{
+    id: 44,
+    name: " HN ROUND CONTAINER - SMALL- 1 Pcs",
+    img: "o44.png",
+    code: "53595",
+    volume: "",
+    description: "100x100x85",
+    packing: "1 Pcs",
+    price: "0.500 OMR"
+  },
+{
+    id: 45,
+    name: "HN ROUND CONTAINER - BIG-1 Pcs",
+    img: "o45.png",
+    code: "53601",
+    volume: "",
+    description: "115x115x100",
+    packing: "1 Pcs",
+    price: "1.000 OMR"
+  },
+{
+    id: 46,
+    name: "HN CAKE BOWL-1 Pcs",
+    img: "o46.png",
+    code: "53618",
+    volume: "0.120 CBM Per Carton",
+    description: "280x280x165",
+    packing: "1 Pcs in Carton",
+    price: "2.800 OMR"
+  },
+{
+    id: 47,
+    name: "TAHINA CONTAINER-1 Pcs",
+    img: "o47.png",
+    code: "54387",
+    volume: "0.231 CBM Per Carton",
+    description: "105x105x40",
+    packing: "1 Pcs in Carton",
+    price: "1.000 OMR"
+  },
+{
+    id: 48,
+    name: "MAJESTIC CONTAINER- 1 Pcs",
+    img: "o48.png",
+    code: "50730",
+    volume: "0.108 CBM Per Carton",
+    description: "220x150x145",
+    packing: "1 Pcs in Carton",
+    price: "2.500 OMR"
+  },
+];
+
+ const counts = {};
+
+    function renderProducts() {
+      const container = document.getElementById('productGrid');
+      container.innerHTML = "";
+      products.forEach(product => {
+        counts[product.id] = 0;
+        const card = document.createElement("div");
+        card.className = "product-card";
+        card.id = "product-" + product.id;
+        card.innerHTML = `
+          <button class="delete-btn" onclick="decreaseCount(${product.id})">🗑️</button>
+          <img src="${product.img}" alt="${product.name}">
+          <h2>${product.name}</h2>
+          <p><strong>Code:</strong> ${product.code}</p>
+          <p><strong>Volume:</strong> ${product.volume}</p>
+          <p><strong>Size & Capacity:</strong> ${product.description}</p>
+          <p><strong>Packing:</strong> ${product.packing}</p>
+          <p class="price">Price: ${product.price}</p>
+          <p>Selected: <span id="count${product.id}">0</span> times</p>
+          <button class="btn" onclick="increaseCount(${product.id})">Select Product</button>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function increaseCount(id) {
+      counts[id]++;
+      document.getElementById("count" + id).innerText = counts[id];
+      const product = products.find(p => p.id === id);
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      let existing = cart.find(item => item.id === product.id);
+      if (existing) {
+        existing.count += 1;
+      } else {
+        cart.push({
+          id: product.id,
+          name: product.name,
+          price: parseFloat(product.price),
+          count: 1,
+          img: product.img
+        });
+      }
+      localStorage.setItem('cart', JSON.stringify(cart));
+    }
+
+    function decreaseCount(id) {
+      if (counts[id] > 0) {
+        counts[id]--;
+        document.getElementById("count" + id).innerText = counts[id];
+        const product = products.find(p => p.id === id);
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        let index = cart.findIndex(item => item.id === product.id);
+        if (index !== -1) {
+          if (cart[index].count > 1) {
+            cart[index].count--;
+          } else {
+            cart.splice(index, 1);
+          }
+          localStorage.setItem('cart', JSON.stringify(cart));
+        }
+      } else {
+        alert("This product has not been selected yet.");
+      }
+    }
+
+    renderProducts();
+  </script>
+</body>
+</html>

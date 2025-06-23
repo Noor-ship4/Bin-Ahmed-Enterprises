@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Furniture</title>
+  <style>
+ body {
+  margin: 0;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background: url('13.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
+
+   h1 {
+  text-align: center;
+  color: white;
+}
+
+    .top-buttons {
+      display: flex;
+      justify-content: flex-start;
+      gap: 10px;
+      padding: 10px;
+    }
+    .home-button, .cart-button {
+      font-size: 24px;
+      background-color: #fff;
+      padding: 10px;
+      border-radius: 50%;
+      box-shadow: 0 0 8px rgba(0,0,0,0.2);
+      cursor: pointer;
+      text-decoration: none;
+      color: black;
+    }
+    .home-button:hover, .cart-button:hover {
+      background-color: #eee;
+    }
+    .product-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+    .product-card {
+      background-color: rgba(255, 255, 255, 0.7); /* More transparent */
+      padding: 15px;
+      width: 300px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      text-align: center;
+      position: relative;
+      color: black;
+    }
+    .product-card img {
+      max-width: 100%;
+      height: 200px;
+      object-fit: contain;
+    }
+    .product-card h2 {
+      font-size: 18px;
+      color: #444;
+    }
+    .product-card p {
+      font-size: 14px;
+      color: #333;
+      margin: 5px 0;
+    }
+    .price {
+      font-weight: bold;
+      color: #000;
+      margin-top: 10px;
+    }
+    .btn {
+      margin: 5px;
+      padding: 5px 15px;
+      border: none;
+      background-color: #a94442;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .delete-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: transparent;
+      border: none;
+      font-size: 22px;
+      color: red;
+      cursor: pointer;
+    }
+    .delete-btn:hover {
+      color: darkred;
+    }
+  </style>
+</head>
+<body>
+  <div class="top-buttons">
+    <a class="home-button" href="product.html" title="Back to Home">🏠</a>
+    <a class="cart-button" href="Shopping Cart.html" title="View Cart">🛒</a>
+  </div>
+
+  <h1>Furniture </h1>
+
+  <div class="product-grid" id="productGrid"></div>
+
+  <script>
+const products = [
+  {
+    id: 87,
+    name: "MAJESTIC CHAIR",
+    code: "51485",
+    packing: "1 Pcs. In Polybag",
+    volume: "0.296 CBM Per Polybag",
+    dimension: "570x600x810",
+    price: "3.500 OMR",
+    img: "img87.jpg"
+  },
+  {
+    id: 88,
+    name: "PRIMA CHAIR",
+    code: "51508",
+    packing: "1 Pcs. In Polybag",
+    volume: "0.296 CBM Per Polybag",
+    dimension: "570x600x810",
+    price: "3.200 OMR",
+    img: "img88.jpg"
+  },
+  {
+    id: 89,
+    name: "ALFA CHAIR - ARMLES",
+    code: "51577",
+    packing: "1 Pcs. In Polybag",
+    volume: "0.22 CBM Per Polybag",
+    dimension: "440x580x890",
+    price: "3.800 OMR",
+    img: "img90.jpg"
+  },
+  {
+    id: 90,
+    name: "OMEGA CHAIR - ARMLESS",
+    code: "51560",
+    packing: "1 Pcs. In Polybag",
+    volume: "0.22 CBM Per Polybag",
+    dimension: "440x580x890",
+    price: "5.600 OMR",
+    img: "img91.jpg"
+  },
+  {
+    id: 91,
+    name: "SIGMA CHAIR-ARMLESS",
+    code: "51584",
+    packing: "1 Pcs. In Polybag",
+    volume: "0.22 CBM Per Polybag",
+    dimension: "440x580x890",
+    price: "4.900 OMR",
+    img: "img92.jpg"
+  },
+  {
+    id: 92,
+    name: "WINDSOR CHAIR",
+    code: "51492",
+    packing: "1 Pcs. In Polybag",
+    volume: "0.296 CBM Per Polybag",
+    dimension: "570x600x810",
+    price: "4.700 OMR",
+    img: "img88.jpg"
+  },
+{
+    id: 93,
+    name: "SPLENDOR CHAIR",
+    code: "51669",
+    packing: "1 Pcs. In Polybag",
+    volume: "0.287 CBM Per Polybag",
+    dimension: "580x600x810",
+    price: "4.300 OMR",
+    img: "img93.jpg"
+  },
+  {
+    id: 94,
+    name: "FLAIR CHAIR",
+    code: "51683",
+    packing: "1 Pcs. In Polybag",
+    volume: "0.287 CBM Per Polybag",
+    dimension: "580x600x810",
+    price: "4.100 OMR",
+    img: "img95.jpg"
+  },
+  {
+    id: 95,
+    name: "S CHAIR",
+    code: "51713",
+    packing: "1 Pcs. In Polybag",
+    volume: "",
+    dimension: "590x490x860",
+    price: "5.000 OMR",
+    img: "img96.jpg"
+  },
+  {
+    id: 96,
+    name: "CRYSTAL CHAIR",
+    code: "53441",
+    packing: "1 Pcs. in Polybag",
+    volume: "0.303 CBM Per Polybag",
+    dimension: "550x410x840",
+    price: "4.600 OMR",
+    img: "img97.jpg"
+  },
+  {
+    id: 97,
+    name: "GARDEN CHAIR-FOLDING",
+    code: "53724",
+    packing: "1 Pcs. in Polybag",
+    volume: "",
+    dimension: "370x410x750",
+    price: "4.400 OMR",
+    img: "img98.jpg"
+  },
+  {
+    id: 98,
+    name: "MYSTIQUE CHAIR",
+    code: "51676",
+    packing: "1 Pcs. In Polybag",
+    volume: "0.287 CBM Per Polybag",
+    dimension: "580x600x810",
+    price: "4.500 OMR",
+    img: "img94.jpg"
+  },
+{
+    id: 99,
+    name: "SCHOOL CHAIR",
+    code: "51690",
+    packing: "1 Pcs. In Polybag",
+    volume: "0.0175 CBM Per Polybag",
+    dimension: "410x485x785",
+    price: "3.000 OMR",
+    img: "img99.jpg"
+  },
+  {
+    id: 100,
+    name: "KIDS CHAIR",
+    code: "52901",
+    packing: "1 Pcs. In Polybag",
+    volume: "0.083 CBM Per Polybag",
+    dimension: "370x350x530",
+    price: "2.500 OMR",
+    img: "img100.jpg"
+  },
+ {
+    id: 101,
+    name: "HIGH BACK CHAIR - REGAL",
+    code: "54134",
+    packing: "1 Pcs. In Polybag",
+    volume: "0.360 CBM Per Polybag",
+    dimension: "440X570X955",
+    price: "5.000 OMR",
+    img: "img101.jpg"
+  },
+  {
+    id: 102,
+    name: "HIGH BACK CHAIR - MONARCH",
+    code: "54141",
+    packing: "1 Pcs. In Polybag",
+    volume: "0.360 CBM Per Polybag",
+    dimension: "440X570X955",
+    price: "5.000 OMR",
+    img: "img102.jpg"
+  },
+  {
+    id: 103,
+    name: "HIGH BACK CHAIR - LEGEND",
+    code: "54127",
+    packing: "1 Pcs. In Polybag",
+    volume: "0.360 CBM Per Polybag",
+    dimension: "440X570X955",
+    price: "5.000 OMR",
+    img: "img103.jpg"
+  },
+
+  {
+    
+    id: 104,
+    name: "CHAIR SHELL",
+    code: "52024",
+    packing: "1 Pcs. In Polybag",
+    volume: "N/A",
+    dimension: "315x450x345",
+    price: "3.500 OMR",
+    img: "img104.jpg"
+  
+  },
+ {
+    id: 105,
+    name: "STEP STOOL",
+    code: "52581",
+    packing: "1 Pcs. In Carton",
+    volume: "0.159 CBM Per Carton",
+    dimension: "540x470x400",
+    price: "1.000",
+    img: "img105.jpg"
+  },
+  {
+    id: 106,
+    name: "STOOL - BIG",
+    code: "51539",
+    packing: "1 Pcs. In Polybag",
+    volume: "0.072 CBM Per Polybag",
+    dimension: "400x340x450",
+    price: "1.200",
+    img: "img106.jpg"
+  },
+  {
+    id: 107,
+    name: "STOOL - SMALL",
+    code: "51225",
+    packing: "1 Pcs. In Polybag",
+    volume: "0.033 CBM Per Polybag",
+    dimension: "320x265x180",
+    price: "0.800",
+    img: "img107.jpg"
+  },
+  {
+    id: 108,
+    name: "TOILET STOOL",
+    code: "54479",
+    packing: "1 Pcs. In Polybag",
+    volume: "0.049 CBM Per Polybag",
+    dimension: "440x280x210",
+    price: "0.700",
+    img: "img108.jpg"
+  },
+  {
+    id: 109,
+    name: "PEARL STOOL",
+    code: "53465",
+    packing: "1 Pcs. in Polybag",
+    volume: "0.090 CBM Per Polybag",
+    dimension: "300x300x445",
+    price: "0.900",
+    img: "img108.png"
+  },
+
+  {
+    id: 110,
+    name: "RUBY STOOL",
+    code: "53458",
+    packing: "1 Pcs. in Polybag",
+    volume: "0.109 CBM Per Polybag",
+    dimension: "550x550x360",
+    price: "1.000 OMR",
+    img: "img109.jpg"
+  },
+  {
+    id: 111,
+    name: "SCHOOL DESK",
+    code: "51706",
+    packing: "1 Pcs. In Carton",
+    volume: "0.084 CBM Per Carton",
+    dimension: "660x520x820",
+    price: "5.000 OMR",
+    img: "img110.jpg"
+  },
+  {
+    id: 112,
+    name: "CLASSIC ROUND TABLE",
+    code: "51591",
+    packing: "1 Pcs. In Carton",
+    volume: "0.111 CBM Per Carton",
+    dimension: "910x910x725",
+    price: "3.500",
+    img: "img111.jpg"
+  },
+ {
+    id: 113,
+    name: "FLORA ROUND TABLE",
+    code: "51607",
+    packing: "1 Pcs. In Carton",
+    volume: "0.112 CBM Per Carton",
+    dimension: "910x910x705",
+    price: "4.500",
+    img: "img112.jpg"
+  },
+  {
+    id: 114,
+    name: "CLASSIC TABLE",
+    code: "51515",
+    packing: "1 Pcs. In Carton",
+    volume: "0.130 CBM Per Carton",
+    dimension: "1400x835x725",
+    price: "10.000 OMR",
+    img: "img113.jpg"
+  },
+  {
+    id: 115,
+    name: "FLORA TABLE",
+    code: "51522",
+    packing: "1 Sets in Carton",
+    volume: "0.150 CBM Per Carton",
+    dimension: "1400x835x715",
+    price: "4.600",
+    img: "img114.jpg"
+  },
+  {
+    id: 116,
+    name: "SQUARE TABLE",
+    code: "52895",
+    packing: "1 Pcs. In Carton",
+    volume: "0.084 CBM Per Carton",
+    dimension: "845x845x710",
+    price: "2.800",
+    img: "img115.jpg"
+  },
+  {
+    id: 117,
+    name: "HN FOLDING STOOL",
+    code: "53397",
+    packing: "1 Pcs in Carton",
+    volume: "0.102 CBM Per Carton",
+    dimension: "280x215x380",
+    price: "1.600",
+    img: "img116.jpg"
+  },
+  {
+    id: 118,
+    name: "FOLDING TABLE",
+    code: "54004",
+    packing: "1 Pcs. in Carton",
+    volume: "0.123 CBM Per Carton",
+    dimension: "430x430x500",
+    price: "3.700",
+    img: "img117.jpg"
+  },
+  {
+    id: 119,
+    name: "CHEST DRAWER - 3 Tier",
+    code: "52871",
+    packing: "1 Pcs. In Carton",
+    volume: "0.207 CBM Per Carton",
+    dimension: "610x440x770",
+    price: "4.550",
+    img: "img118.jpg"
+  },
+  {
+    id: 120,
+    name: "CHEST DRAWER - 4 Tier",
+    code: "52888",
+    packing: "1 Pcs in Carton",
+    volume: "0.268 CBM Per Carton",
+    dimension: "610x440x1000",
+    price: "5.000",
+    img: "img119.jpg"
+  },
+  {
+    id: 121,
+    name: "RATTAN SOFA SINGLE",
+    code: "54318",
+    packing: "1 Pcs. In Carton",
+    volume: "0.178 CBM Per Carton",
+    dimension: "660x695x800",
+    price: "15.000",
+    img: "img120.jpg"
+  },
+  {
+    id: 122,
+    name: "RATTAN SOFA - 2 SEATER",
+    code: "54394",
+    packing: "1pcs.icarton",
+    volume: "0.280 CBM Per carton",
+    dimension: "1280x695x800",
+    price: "60.000",
+    img: "img123.jpg"
+  },
+  {
+    id: 123,
+  name: "TEAPOY",
+    code: "54332",
+    packing: "1 Pcs. In Carton",
+    volume: "0.086 CBM Per Carton",
+    dimension: "765x500x410",
+    price: "30.000",
+    img: "img121.jpg"
+  },
+  {
+    id: 124,
+    name: "RATTAN SOFA - 3 SEATER",
+    code: "54479",
+    packing: "1 Pcs. In Carton",
+    volume: "0.382 CBM Per Carton",
+    dimension: "1800x695x800",
+    price: "100.000",
+    img: "img122.jpg"
+  },
+       
+ 
+];
+
+
+   const counts = {};
+
+    function renderProducts() {
+      const container = document.getElementById('productGrid');
+      container.innerHTML = "";
+      products.forEach(product => {
+        counts[product.id] = 0;
+        const card = document.createElement("div");
+        card.className = "product-card";
+        card.id = "product-" + product.id;
+        card.innerHTML = `
+          <button class="delete-btn" onclick="decreaseCount(${product.id})">🗑️</button>
+          <img src="${product.img}" alt="${product.name}">
+          <h2>${product.name}</h2>
+          <p><strong>Code:</strong> ${product.code}</p>
+          <p><strong>Volume:</strong> ${product.volume}</p>
+          <p><strong>Size & Capacity:</strong> ${product.description}</p>
+          <p><strong>Packing:</strong> ${product.packing}</p>
+          <p class="price">Price: ${product.price}</p>
+          <p>Selected: <span id="count${product.id}">0</span> times</p>
+          <button class="btn" onclick="increaseCount(${product.id})">Select Product</button>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function increaseCount(id) {
+      counts[id]++;
+      document.getElementById("count" + id).innerText = counts[id];
+      const product = products.find(p => p.id === id);
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      let existing = cart.find(item => item.id === product.id);
+      if (existing) {
+        existing.count += 1;
+      } else {
+        cart.push({
+          id: product.id,
+          name: product.name,
+          price: parseFloat(product.price),
+          count: 1,
+          img: product.img
+        });
+      }
+      localStorage.setItem('cart', JSON.stringify(cart));
+    }
+
+    function decreaseCount(id) {
+      if (counts[id] > 0) {
+        counts[id]--;
+        document.getElementById("count" + id).innerText = counts[id];
+        const product = products.find(p => p.id === id);
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        let index = cart.findIndex(item => item.id === product.id);
+        if (index !== -1) {
+          if (cart[index].count > 1) {
+            cart[index].count--;
+          } else {
+            cart.splice(index, 1);
+          }
+          localStorage.setItem('cart', JSON.stringify(cart));
+        }
+      } else {
+        alert("This product has not been selected yet.");
+      }
+    }
+
+    renderProducts();
+  </script>
+</body>
+</html>

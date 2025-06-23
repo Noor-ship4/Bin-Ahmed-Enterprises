@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>KITCHEN WARE</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      background: url('11.jpg') no-repeat center center fixed;
+      background-size: cover;
+    }
+    h1 {
+  text-align: center;
+  color: white;
+
+    }
+    .top-buttons {
+      display: flex;
+      justify-content: flex-start;
+      gap: 10px;
+      padding: 10px;
+    }
+    .home-button, .cart-button {
+      font-size: 24px;
+      background-color: #fff;
+      padding: 10px;
+      border-radius: 50%;
+      box-shadow: 0 0 8px rgba(0,0,0,0.2);
+      cursor: pointer;
+      text-decoration: none;
+      color: black;
+    }
+    .home-button:hover, .cart-button:hover {
+      background-color: #eee;
+    }
+    .product-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+    .product-card {
+      background-color: rgba(255, 255, 255, 0.7); /* More transparent */
+      padding: 15px;
+      width: 300px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      text-align: center;
+      position: relative;
+      color: black;
+    }
+    .product-card img {
+      max-width: 100%;
+      height: 200px;
+      object-fit: contain;
+    }
+    .product-card h2 {
+      font-size: 18px;
+      color: #444;
+    }
+    .product-card p {
+      font-size: 14px;
+      color: #333;
+      margin: 5px 0;
+    }
+    .price {
+      font-weight: bold;
+      color: #000;
+      margin-top: 10px;
+    }
+    .btn {
+      margin: 5px;
+      padding: 5px 15px;
+      border: none;
+      background-color: #a94442;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .delete-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: transparent;
+      border: none;
+      font-size: 22px;
+      color: red;
+      cursor: pointer;
+    }
+    .delete-btn:hover {
+      color: darkred;
+    }
+  </style>
+</head>
+<body>
+  <div class="top-buttons">
+    <a class="home-button" href="product.html" title="Back to Home">🏠</a>
+    <a class="cart-button" href="Shopping Cart.html" title="View Cart">🛒</a>
+  </div>
+
+  <h1>KITCHEN WARE</h1>
+
+  <div class="product-grid" id="productGrid"></div>
+
+  <script>
+   
+ const products = [
+ { id: 1, name: "TIGHT N FRESH CONTAINERS - 3 Pcs Set", img: "img1.png", code: "50099", volume: "0.123 CBM Per Carton", description: "160x160x110 (625ml)", price: "1.800 OMR", packing: "1 Set In Carton" },
+  { id: 2, name: "TIGHT N FRESH CONTAINERS - 5 Pcs Set", img: "img2.png", code: "50105", volume: "0.123 CBM Per Carton", description: "200 x 200 x 130 (625ml, 1Ltr, 1.5Ltr, 2Ltr, 3Ltr)", price: "2.000 OMR", packing: "1 Set In Carton" },
+  { id: 3, name: "ELITE CONTAINERS - 5 Pcs Set", img: "img3.jpg", code: "50136", volume: "0.123 CBM Per Carton", description: "220 x 220 x 245 (1Ltr, 1.5Ltr, 2Ltr, 3Ltr, 8Ltr)", price: "2.300 OMR", packing: "1 Set In Poly Bag" },
+  { id: 4, name: "ROUND AND ROUND CONTAINERS - 5 Pcs Set", img: "img4.jpg", code: "53922", volume: "0.113 CBM Per Carton", description: "250x250x275 (1.5Ltr, 2.75Ltr, 4.5Ltr, 7Ltr, 10Ltr)", price: "2.500 OMR", packing: "1 Set In Carton" },
+  { id: 5, name: "SELITE CONTAINER", img: "img5.jpg", code: "50129", volume: "0.130 CBM Per Poly Bag", description: "220X220X245 (8 LTR)", price: "1.200 OMR", packing: "1 Pcs. In Poly Bag" },
+  { id: 6, name: "REHLA HB CONTAINER (3 Pcs Set)", img: "img6.jpg", code: "52093", volume: "0.130 CBM Per Poly Bag", description: "155X155X65 (650 ML), 170X170X75 (1 LTR)", price: "1.600 OMR", packing: "1 Pcs. In Poly Bag" },
+  { id: 7, name: "SMART CONTAINERS - 3 Pcs Set", img: "img7.jpg", code: "50112", volume: "0.123 CBM Per Carton", description: "270 x 260 x 65 (50ml, 800ml, 2 Ltr)", price: "2.150 OMR", packing: "1 Set In Carton" },
+  { id: 8, name: "STORE WELL CONTAINERS - 5Pcs Set", img: "img8.jpg", code: "51652", volume: "0.102 CBM Per Carton", description: "240 x 75 x 100 (250ml, 500ml, 1Ltr, 2Ltr, 2.5Ltr)", price: "2.350 OMR", packing: "1 Set In Carton" },
+  { id: 9, name: "IDEAL CONTAINERS - SMALL - 3 Pcs Set", img: "img9.jpg", code: "51072", volume: "0.102 CBM Per Carton", description: "195 x 145 x 120 (1Ltr x 3)", price: "1.800 OMR", packing: "1 sets per carton" },
+  { id: 10, name: "IDEAL CONTAINERS - MEDIUM - 3 Pcs Set", img: "img10.jpg", code: "51249", volume: "0.102 CBM Per Carton", description: "225 x 275 x 140 (2.5Ltr x 3)", price: "1.600 OMR", packing: "1 Set In Carton" },
+  { id: 11, name: "IDEAL CONTAINERS - MIX - 3 Pcs Set", img: "img11.jpg", code: "51256", volume: "0.102 CBM Per Carton", description: "240 x 165 x 60 mm (Small, Medium, Large)", price: "1.200 OMR", packing: "1 sets per carton" },
+  { id: 12, name: "WAVE CONTAINERS - 2 Pcs Set", img: "img12.jpg", code: "51645", volume: "0.102 CBM Per Carton", description: "270 x 200 x 105 (3Ltr x 2)", price: "1.400 OMR", packing: "1 sets per carton" },
+  { id: 13, name: "ESSENCE CONTAINER", img: "img13.jpg", code: "551638", volume: "0.102 CBM Per Carton", description: "330x235x80 (3Ltr)", price: "1.000 OMR", packing: "1 Pes. In Carton" },
+  { id: 14, name: "LOCK WELL CONTAINERS", img: "img14.jpg", code: "51621", volume: "0.102 CBM Per Carton", description: "230x180x95 (2.51tr)", price: "1.100 OMR", packing: "1 Pes. In Carton" },
+  { id: 15, name: "VICTORY CONTAINERS", img: "img15.jpg", code: "50747", volume: "0.102 CBM Per Carton", description: "255x200x165(4L tr)", price: "1.700 OMR", packing: "1 Pes. In Carton" },
+  { id: 16, name: "SERVE N SAVE - 2 Pcs Set", img: "img16.jpg", code: "50341", volume: "0.123 CBM Per Carton", description: "470 x 470 x 290 (1Ltr, 2Ltr)", price: "2.200 OMR", packing: "1 Set In Carton" },
+  { id: 17, name: "RECTANGULAR CONTAINERS - 3Pcs. Set", img: "img17.jpg", code: "53533", volume: "0.044 CBM per carton", description: "180x120x90(1.2Ltr)", price: "1.600 OMR", packing: "1 Set in Carton" },
+  { id: 18, name: "PACK N SERVE - 2 Pcs Set", img: "img18.jpg", code: "50518", volume: "0.123 CBM Per Carton", description: "295 x 270 x 105 (1.2Ltr, 2.5Ltr)", price: "1.500 OMR", packing: "1 Set in Carton" },
+  { id: 19, name: "CLICK CONTAINERS - 2 Pcs Set", img: "img19.jpg", code: "50501", volume: "0.123 CBM Per Carton", description: "275x235x105(1.51tr, 2.51tr)", price: "1.700 OMR", packing: "1 Set In Carton" },
+  { id: 20, name: "ROUND CONTAINERS - 3 Pcs Set", img: "img20.jpg", code: "53540", volume: "0.112 CBM", description: "210x210x190 (1.5Ltr, 2.5Ltr, 4Ltr)", price: "2.600 OMR", packing: "1 sets per carton" },
+{ 
+  id: 21, 
+  name: "IDEAL DRY FOOD CONTAINERS - 2 Pcs Set", 
+  code: "51263", 
+  packing: "1 Sets In Carton", 
+  volume: "0.123 CBM Per Carton", 
+  dimension: "275 x 150 x 285 (2.5Ltr, 6Ltr)", 
+  price: "3.500 OMR",
+  img: "img21.jpg"
+},
+
+{ 
+  id: 22, 
+  name: "PUSH UP CONTAINERS - 3 Pcs Set", 
+  code: "50051", 
+  packing: "1 Sets In Carton", 
+  volume: "0.123 CBM Per Carton", 
+  dimension: "270 x 220 x 120 (1Ltr, 1.5Ltr, 2Ltr)", 
+  price: "2.900 OMR",
+  img: "img22.jpg"
+},
+
+{ 
+  id: 23, 
+  name: "MASTER STOREWELL 3PCS SET SMALL", 
+  code: "54837", 
+  packing: "1 Sets In Carton", 
+  volume: "0.069 CBM Per Carton", 
+  dimension: "274 x 188 x 103 (1.5Ltr, 2.5Ltr, 3.5Ltr)", 
+  price: "3.800 OMR",
+  img: "img24.jpg"
+},
+
+{ 
+  id: 24, 
+  name: "MASTER STOREWELL 6PCS SET", 
+  code: "54820", 
+  packing: "1 Sets In Carton", 
+  volume: "0.094 CBM Per Carton", 
+  dimension: "390 x 277 x 138 (1.5Ltr, 2.5Ltr, 3.5Ltr, 5.2Ltr, 7.5Ltr, 10.5Ltr)", 
+  price: "6.200 OMR",
+  img: "img23.jpg"
+},
+
+{ 
+  id: 25, 
+  name: "HN FRUIT BOWL - 2", 
+  code: "51881", 
+  packing: "1 Pcs Per Carton", 
+  volume: "0.069 CBM Per Carton", 
+  dimension: "265 x 265 x 125", 
+  price: "1.900 OMR",
+  img: "img30.jpg"
+},
+
+{ 
+  id: 26, 
+  name: "HN FRUIT BOWL - 1", 
+  code: "51874", 
+  packing: "1 Pcs Per Carton", 
+  volume: "0.059 CBM Per Carton", 
+  dimension: "195 x 195 x 90", 
+  price: "1.400 OMR",
+  img: "img29.jpg"
+},
+{ 
+  id: 27, 
+  name: "MASTER STOREWELL 3PCS SET BIG", 
+  code: "54844", 
+  packing: "1 Sets In Carton", 
+  volume: "0.094 CBM Per Carton", 
+  dimension: "390 x 277 x 138 (5.2Ltr, 7.5Ltr, 10.5Ltr)", 
+  price: "4.800 OMR",
+  img: "img25.jpg"
+},
+
+{ 
+  id: 28, 
+  name: "BREAD BOX - 14", 
+  code: "52857", 
+  packing: "1 Pcs In Poly Bag", 
+  volume: "0.051 CBM Per Poly Bag", 
+  dimension: "360 x 360 x 110", 
+  price: "1.800 OMR",
+  img: "img26.jpg"
+},
+
+{ 
+  id: 29, 
+  name: "BREAD BOX - 18", 
+  code: "52864", 
+  packing: "1 Pcs In Poly Bag", 
+  volume: "0.077 CBM Per Poly Bag", 
+  dimension: "450 x 450 x 110", 
+  price: "2.200 OMR",
+  img: "img27.jpg"
+},
+
+{ 
+  id: 30, 
+  name: "DELUX LUNCH BOX", 
+  code: "50143", 
+  packing: "1 Pcs In Carton", 
+  volume: "0.123 CBM Per Carton", 
+  dimension: "215 x 140 x 110", 
+  price: "1.500 OMR",
+  img: "img28.jpg"
+},
+
+{ 
+  id: 31, 
+  name: "SQUARE CONTAINERS - 3 Pcs Set", 
+  code: "53915", 
+  packing: "1 Pcs In Carton", 
+  volume: "N/A", 
+  dimension: "170x170x90 (1.3Ltr), 230x230x120 (3Ltr), 280x280x140 (5.6Ltr)", 
+  price: "2.700 OMR",
+  img: "img36.jpg"
+},
+
+{ 
+  id: 32, 
+  name: "HN COLANDER", 
+  code: "50716", 
+  packing: "1 Pcs In Poly Bag", 
+  volume: "0.03 CBM Per Poly Bag", 
+  dimension: "410 x 350 x 110", 
+  price: "1.300 OMR",
+  img: "img33.jpg"
+},
+
+{ 
+  id: 33, 
+  name: "COLANDER - SMALL", 
+  code: "54899", 
+  packing: "1 Pcs In Poly Bag", 
+  volume: "0.02 CBM Per Poly Bag", 
+  dimension: "230 x 206 x 90 (2.15 Ltr)", 
+  price: "1.000 OMR",
+  img: "img32.jpg"
+},
+
+{ 
+  id: 34, 
+  name: "FOOD COVER - SMALL", 
+  code: "50600", 
+  packing: "1 Pcs In Poly Bag", 
+  volume: "0.025 CBM Per Poly Bag", 
+  dimension: "260 x 260 x 140", 
+  price: "0.900 OMR",
+  img: "img34.jpg"
+},
+
+{ 
+  id: 35, 
+  name: "FOOD COVER - BIG", 
+  code: "50617", 
+  packing: "1 Pcs In Poly Bag", 
+  volume: "0.042 CBM Per Poly Bag", 
+  dimension: "350 x 350 x 175", 
+  price: "1.500 OMR",
+  img: "img35.jpg"
+},
+
+{ 
+  id: 36, 
+  name: "FRUIT BASKET - 3 Pcs Set", 
+  code: "50631", 
+  packing: "1 Sets In Carton", 
+  volume: "0.186 CBM Per Carton", 
+  dimension: "305 x 305 x 130", 
+  price: "2.600 OMR",
+  img: "img31.jpg"
+},
+{ 
+  id: 37, 
+  name: "DISH RACK 2 TIER", 
+  code: "52826", 
+  packing: "1 Sets In Carton", 
+  volume: "0.127 CBM Per Carton", 
+  dimension: "490 x 310 x 290", 
+  price: "4.500 OMR", 
+  img: "img41.jpg" 
+},
+
+{ 
+  id: 38, 
+  name: "RECTANGULAR TRAY PRINTED", 
+  code: "51673", 
+  packing: "1 Pcs In Carton", 
+  volume: "0.052 CBM Per Carton", 
+  dimension: "455 x 320 x 45", 
+  price: "1.000 OMR", 
+  img: "img38.jpg" 
+},
+
+{ 
+  id: 39, 
+  name: "CRYSTAL TRAY", 
+  code: "53670", 
+  packing: "1 Pcs In Carton", 
+  volume: "0.091 CBM Per Carton", 
+  dimension: "510 x 320 x 50", 
+  price: "2.200 OMR", 
+  img: "img40.jpg" 
+},
+
+{ 
+  id: 40, 
+  name: "SALAD BOWL WITH FORK & SPOON - 6 Pcs Set", 
+  code: "53656", 
+  packing: "1 Sets Per Carton", 
+  volume: "0.054 CBM Per Carton", 
+  dimension: "260 x 260 x 140", 
+  price: "2.800 OMR", 
+  img: "img37.jpg" 
+},
+
+{ 
+  id: 41, 
+  name: "DELUX TRAY", 
+  code: "53700", 
+  packing: "1 Pcs In Carton", 
+  volume: "0.072 CBM Per Carton", 
+  dimension: "430 x 295 x 25", 
+  price: "1.200 OMR", 
+  img: "img39.jpg" 
+},
+
+{ 
+  id: 42, 
+  name: "DISH DRAINER WITH TRAY", 
+  code: "51133", 
+  packing: "1 Sets In Carton", 
+  volume: "0.091 CBM Per Carton", 
+  dimension: "460 x 380 x 85", 
+  price: "3.000 OMR", 
+  img: "img42.jpg" 
+},
+
+{
+  id: 43,
+  name: "ENJOY JUG",
+  code: "50587",
+  packing: "1 Pcs In Carton",
+  volume: "0.123 CBM Per Carton",
+  dimension: "180 x 115 x 245 (2.5 Ltr)",
+  price: "1.000 OMR",
+  img: "img47.jpg"
+},
+
+{
+  id: 44,
+  name: "HN JUICE JUG",
+  code: "53472",
+  packing: "1 Pcs In Carton",
+  volume: "Not Specified",
+  dimension: "200 x 100 x 260 (2.5 Ltr)",
+  price: "1.000 OMR",
+  img: "img48.jpg"
+},
+
+{
+  id: 45,
+  name: "PITCHER JUG",
+  code: "52680",
+  packing: "1 Pcs In Carton",
+  volume: "0.123 CBM Per Carton",
+  dimension: "160 x 110 x 225 (2 Ltr)",
+  price: "0.900 OMR",
+  img: "img44.jpg"
+},
+
+{
+  id: 46,
+  name: "DELUX JUG",
+  code: "50235",
+  packing: "1 Pcs In Carton",
+  volume: "0.091 CBM Per Carton",
+  dimension: "145 x 100 x 240 (2 Ltr)",
+  price: "0.800 OMR",
+  img: "img46.jpg"
+},
+
+{
+  id: 47,
+  name: "JUG - 35",
+  code: "51300",
+  packing: "1 Pcs In Polybag",
+  volume: "0.079 CBM Per Polybag",
+  dimension: "165 x 165 x 255 (3.5 Ltr)",
+  price: "1.400 OMR",
+  img: "img45.jpg"
+},
+
+{
+  id: 48,
+  name: "CUTLERY TRAY",
+  code: "51942",
+  packing: "1 Pcs In Carton",
+  volume: "0.053 CBM Per Carton",
+  dimension: "420 x 375 x 45",
+  price: "0.800 OMR",
+  img: "img43.jpg"
+},
+
+{
+  id: 49,
+  name: "DELUX TUMBLER - 12 Pcs Set",
+  code: "50167",
+  packing: "1 Sets In Carton",
+  volume: "0.042 CBM Per Carton",
+  dimension: "70 x 70 x 105 (300 ml)",
+  price: "1.200 OMR",
+  img: "img53.jpg"
+},
+
+{
+  id: 50,
+  name: "CRYSTAL TUMBLER - BIG - 6 Pcs Set",
+  code: "53496",
+  packing: "1 Sets In Carton",
+  volume: "Not Specified",
+  dimension: "60 x 60 x 130",
+  price: "1.000 OMR",
+  img: "img50.jpg"
+},
+
+{
+  id: 51,
+  name: "PICNIC TUMBLER - 6 Pcs Set",
+  code: "50044",
+  packing: "1 Sets In Carton",
+  volume: "0.060 CBM Per Carton",
+  dimension: "75 x 75 x 120 (400 ml)",
+  price: "1.900 OMR",
+  img: "img52.jpg"
+},
+
+{
+  id: 52,
+  name: "CRYSTAL TUMBLER - SMALL - 6 Pcs Set",
+  code: "53502",
+  packing: "1 Sets In Carton",
+  volume: "Not Specified",
+  dimension: "75 x 75 x 100",
+  price: "1.800 OMR",
+  img: "img51.jpg"
+},
+
+{
+  id: 53,
+  name: "CRYSTAL JUG",
+  code: "53489",
+  packing: "1 Pcs In Carton",
+  volume: "Not Specified",
+  dimension: "150 x 150 x 230 (2 Ltr)",
+  price: "1.200 OMR",
+  img: "img49.jpg"
+},
+
+{
+  id: 54,
+  name: "ZIP N SIP GLASS",
+  code: "50068",
+  packing: "1 Pcs In Carton",
+  volume: "0.123 CBM Per Carton",
+  dimension: "100 x 95 x 160 (600 ml)",
+  price: "0.700 OMR",
+  img: "img54.jpg"
+},
+{
+  id: 55,
+  name: "HN CORNER SHELF - 3 Tier",
+  code: "53953",
+  packing: "1 Sets in Carton",
+  volume: "0.090 CBM Per Carton",
+  dimension: "380 x 280 x 570",
+  price: "2.200 OMR",
+  img: "img55.jpg"
+},
+
+{
+  id: 56,
+  name: "HN CORNER SHELF - 4 Tier",
+  code: "53991",
+  packing: "1 Sets in Carton",
+  volume: "0.090 CBM Per Carton",
+  dimension: "380 x 280 x 800",
+  price: "2.800 OMR",
+  img: "img56.jpg"
+},
+
+{
+  id: 57,
+  name: "HN TROLLY - 3 Tier",
+  code: "51546",
+  packing: "1 Sets in Carton",
+  volume: "0.140 CBM Per Carton",
+  dimension: "500 x 355 x 585",
+  price: "3.200 OMR",
+  img: "img57.jpg"
+},
+
+{
+  id: 58,
+  name: "HN TROLLY - 4 Tier",
+  code: "51553",
+  packing: "1 Sets in Carton",
+  volume: "0.140 CBM Per Carton",
+  dimension: "500 x 355 x 790",
+  price: "3.800 OMR",
+  img: "img58.jpg"
+},
+
+{
+  id: 59,
+  name: "ELEGANZA TROLLY - 3 Tier",
+  code: "50624",
+  packing: "1 Sets in Carton",
+  volume: "0.214 CBM Per Carton",
+  dimension: "490 x 355 x 565",
+  price: "3.600 OMR",
+  img: "img59.jpg"
+},
+
+{
+  id: 60,
+  name: "ELEGANZA TROLLY - 4 Tier",
+  code: "50891",
+  packing: "1 Sets in Carton",
+  volume: "0.214 CBM Per Carton",
+  dimension: "490 x 355 x 770",
+  price: "4.200 OMR",
+  img: "img60.png"
+},
+
+{
+  id: 61,
+  name: "SOHA PLATE - 16”",
+  code: "51317",
+  packing: "1 Pcs in Carton",
+  volume: "0.043 CBM Per Carton",
+  dimension: "16”",
+  price: "0.500 OMR",
+  img: "img61.jpg"
+},
+
+{
+  id: 62,
+  name: "SOHA PLATE - 18”",
+  code: "51324",
+  packing: "1 Pcs in Carton",
+  volume: "0.049 CBM Per Carton",
+  dimension: "18”",
+  price: "0.600 OMR",
+  img: "img62.jpg"
+},
+
+{
+  id: 63,
+  name: "ROUND PLATE - 8 (6 Pcs Set)",
+  code: "50822",
+  packing: "1 Sets in Carton",
+  volume: "0.042 CBM Per Carton",
+  dimension: "8”",
+  price: "1.425 OMR",
+  img: "img63.jpg"
+},
+
+{
+  id: 64,
+  name: "ROUND PLATE - 9 (6 Pcs Set)",
+  code: "50839",
+  packing: "1 Sets in Carton",
+  volume: "0.055 CBM Per Carton",
+  dimension: "9”",
+  price: "1.300 OMR",
+  img: "img64.jpg"
+},
+
+{
+  id: 65,
+  name: "ROUND PLATE - Flat ",
+  code: "53663",
+  packing: "1 Pcs In Carton",
+  volume: "Not Specified",
+  dimension: "9”",
+  price: "1.750 OMR",
+  img: "img65.jpg"
+},
+
+{
+  id: 66,
+  name: "ROUND PLATE - 11 (6 Pcs Set)",
+  code: "53878",
+  packing: "1 Sets in Carton",
+  volume: "0.055 CBM Per Carton",
+  dimension: "11”",
+  price: "1.100 OMR",
+  img: "img66.jpg"
+},
+
+{
+  id: 67,
+  name: "SQUARE PLATE - 8 (6 Pcs Set)",
+  code: "53892",
+  packing: "1 Sets in Carton",
+  volume: "0.053 CBM Per Carton",
+  dimension: "8”",
+  price: "1.650 OMR",
+  img: "img67.jpg"
+},
+{
+  id: 68,
+  name: "SQUARE PLATE - 9 (6 Pcs Set)",
+  code: "54158",
+  packing: "1 Sets In Carton",
+  volume: "0.053 CBM Per Carton",
+  dimension: "9”",
+  price: "1.200 OMR",
+  img: "img68.jpg"
+},
+{
+  id: 69,
+  name: "SQUARE PLATE - 10 (6 Pcs Set)",
+  code: "53885",
+  packing: "1 Sets In Carton",
+  volume: "0.054 CBM Per Carton",
+  dimension: "10”",
+  price: "1.100 OMR",
+  img: "img69.jpg"
+},
+
+{
+  id: 70,
+  name: "SOUP BOWL (6 Pcs Set)",
+  code: "53960",
+  packing: "1 Sets In Carton",
+  volume: "0.039 CBM Per Carton",
+  dimension: "140 x 140 x 50",
+  price: "2.450 OMR",
+  img: "img70.jpg"
+},
+
+{
+  id: 71,
+  name: "SALAD BOWL - SMALL (6 Pcs Set)",
+  code: "53977",
+  packing: "1 Sets In Carton",
+  volume: "0.091 CBM Per Carton",
+  dimension: "170 x 170 x 65",
+  price: "2.050 OMR",
+  img: "img71.jpg"
+},
+
+{
+  id: 72,
+  name: "SALAD BOWL - BIG (6 Pcs Set)",
+  code: "53984",
+  packing: "1 Sets In Carton",
+  volume: "0.091 CBM Per Carton",
+  dimension: "200 x 200 x 80",
+  price: "3.200 OMR",
+  img: "img72.jpg"
+},
+
+{
+  id: 73,
+  name: "FORK & SPOON",
+  code: "50853, 53939",
+  packing: "1 Pcs In Carton",
+  volume: "Not Specified",
+  dimension: "6”",
+  price: "0.999 OMR",
+  img: "img73.png"
+},
+
+{
+  id: 74,
+  name: "MICROWAVE PLATE COVER",
+  code: "51614",
+  packing: "1 Pcs in Carton",
+  volume: "0.052 CBM Per Carton",
+  dimension: "265 x 265 x 65",
+  price: "0.425 OMR",
+  img: "img74.jpg"
+},
+
+{
+  id: 75,
+  name: "CRYSTAL PLATE - SMALL",
+  code: "54189",
+  packing: "1 Pcs In Carton",
+  volume: "Not Specified",
+  dimension: "Not Specified",
+  price: "0.650 OMR",
+  img: "img76.jpg"
+},
+{
+  id: 76,
+  name: "KITCHEN BOWL",
+  code: "51935",
+  packing: "1 Pcs In Carton",
+  volume: "0.053 CBM Per Carton",
+  dimension: "380 x 280 x 140",
+  price: "0.700 OMR",
+  img: "img75.jpg"
+},
+{
+  id: 77,
+  name: "CRYSTAL PLATE - BIG",
+  code: "54202",
+  packing: "1 Pcs In Carton",
+  volume: "Not Specified",
+  dimension: "Not Specified",
+  price: "1.000 OMR",
+  img: "img78.jpg"
+},
+
+{
+  id: 78,
+  name: "CRYSTAL PLATE - MEDIUM",
+  code: "54196",
+  packing: "1 Pcs In Carton",
+  volume: "Not Specified",
+  dimension: "Not Specified",
+  price: "0.855 OMR",
+  img: "img77.jpg"
+},
+
+{
+  id: 79,
+  name: "CRYSTAL BOWL - 3Pcs Set",
+  code: "54905",
+  packing: "1 Set In Carton",
+  volume: "0.051 CBM Per Carton",
+  dimension: "310 x 310 x 100",
+  price: "1.300 OMR",
+  img: "img79.jpg"
+},
+
+];
+
+
+
+  const counts = {};
+
+    function renderProducts() {
+      const container = document.getElementById('productGrid');
+      container.innerHTML = "";
+      products.forEach(product => {
+        counts[product.id] = 0;
+        const card = document.createElement("div");
+        card.className = "product-card";
+        card.id = "product-" + product.id;
+        card.innerHTML = `
+          <button class="delete-btn" onclick="decreaseCount(${product.id})">🗑️</button>
+          <img src="${product.img}" alt="${product.name}">
+          <h2>${product.name}</h2>
+          <p><strong>Code:</strong> ${product.code}</p>
+          <p><strong>Volume:</strong> ${product.volume}</p>
+          <p><strong>Size & Capacity:</strong> ${product.description}</p>
+          <p><strong>Packing:</strong> ${product.packing}</p>
+          <p class="price">Price: ${product.price}</p>
+          <p>Selected: <span id="count${product.id}">0</span> times</p>
+          <button class="btn" onclick="increaseCount(${product.id})">Select Product</button>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function increaseCount(id) {
+      counts[id]++;
+      document.getElementById("count" + id).innerText = counts[id];
+      const product = products.find(p => p.id === id);
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      let existing = cart.find(item => item.id === product.id);
+      if (existing) {
+        existing.count += 1;
+      } else {
+        cart.push({
+          id: product.id,
+          name: product.name,
+          price: parseFloat(product.price),
+          count: 1,
+          img: product.img
+        });
+      }
+      localStorage.setItem('cart', JSON.stringify(cart));
+    }
+
+    function decreaseCount(id) {
+      if (counts[id] > 0) {
+        counts[id]--;
+        document.getElementById("count" + id).innerText = counts[id];
+        const product = products.find(p => p.id === id);
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        let index = cart.findIndex(item => item.id === product.id);
+        if (index !== -1) {
+          if (cart[index].count > 1) {
+            cart[index].count--;
+          } else {
+            cart.splice(index, 1);
+          }
+          localStorage.setItem('cart', JSON.stringify(cart));
+        }
+      } else {
+        alert("This product has not been selected yet.");
+      }
+    }
+
+    renderProducts();
+  </script>
+</body>
+</html>

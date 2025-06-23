@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Welcome to Our Store</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body, html {
+      height: 100%;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      scroll-behavior: smooth;
+    }
+
+    .hero {
+      background: url('home1.jpg') no-repeat center center/cover;
+      height: 100vh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 50px;
+      color: white;
+      text-align: right;
+    }
+
+    .overlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0,0,0,0.5);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 500px;
+    }
+
+    .hero h1 {
+      font-size: 3em;
+      margin-bottom: 20px;
+      animation: fadeInDown 1s ease-out;
+    }
+
+    .hero p {
+      font-size: 1.2em;
+      margin-bottom: 30px;
+      animation: fadeInUp 1.2s ease-out;
+    }
+
+    .buttons-group {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .hero button {
+      padding: 15px 30px;
+      font-size: 1em;
+      border: none;
+      border-radius: 25px;
+      background-color: #ff4444;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s;
+      width: fit-content;
+      align-self: flex-end;
+    }
+
+    .hero button:hover {
+      background-color: #cc0000;
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        justify-content: center;
+        text-align: center;
+        padding-right: 0;
+      }
+
+      .buttons-group {
+        align-items: center;
+      }
+
+      .hero h1 {
+        font-size: 2em;
+      }
+
+      .hero p {
+        font-size: 1em;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hero Section -->
+  <div class="hero">
+    <div class="overlay"></div>
+    <div class="hero-content">
+      <h1>Bin Ahmed Enterprises</h1>
+      <p>A company specialized in manufacturing plastic products</p>
+      <div class="buttons-group">
+        <button onclick="goTo('product.html')">Products</button>
+        <button onclick="goTo('offers page.html')">Offers</button>
+        <button onclick="goTo('Contact Us.html')">Contact Us</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function goTo(page) {
+      window.location.href = page;
+    }
+  </script>
+
+</body>
+</html>

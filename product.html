@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Our Products</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: url('home2.jpg') no-repeat center center fixed;
+      background-size: cover;
+      direction: ltr;
+      overflow-x: hidden;
+    }
+
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.6);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    .top-bar {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 2;
+    }
+
+    .top-bar a {
+      text-decoration: none;
+      color: white;
+      background-color: rgba(255, 0, 0, 0.8);
+      padding: 10px 15px;
+      border-radius: 30px;
+      font-size: 1em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .top-bar a:hover {
+      background-color: rgba(200, 0, 0, 0.9);
+    }
+
+    .top-bar a::before {
+      content: "🏠";
+      font-size: 1.2em;
+    }
+
+    h1 {
+      text-align: center;
+      color: white;
+      padding: 40px 0;
+      font-size: 2.5em;
+      text-shadow: 2px 2px 4px #000;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      padding: 40px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      backdrop-filter: blur(5px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.3);
+    }
+
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .card h3 {
+      margin: 15px;
+      font-size: 1.2em;
+      color: #333;
+    }
+
+    .card button {
+      margin: 10px 0 20px;
+      padding: 10px 25px;
+      background-color: #ff4444;
+      color: white;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .card button:hover {
+      background-color: #cc0000;
+      transform: scale(1.05);
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2em;
+      }
+
+      .card img {
+        height: 140px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay"></div>
+  <div class="top-bar">
+    <a href="home.html">Home</a>
+  </div>
+  <h1>Our Products</h1>
+  <div class="container">
+    <div class="card">
+      <img src="KITCHEN WARE.jpg" alt="KITCHEN WARE">
+      <h3>Kitchen Ware</h3>
+      <button onclick="window.location.href='KITCHEN WARE.html'">Browse</button>
+    </div>
+    <div class="card">
+      <img src="BATHROOM WARE.jpg" alt="BATHROOM WARE">
+      <h3>Bathroom Ware</h3>
+      <button onclick="window.location.href='BATHROOM WARE.html'">Browse</button>
+    </div>
+    <div class="card">
+      <img src="FURNITURE.jpg" alt="FURNITURE">
+      <h3>Furniture</h3>
+      <button onclick="window.location.href='FURNITURE.html'">Browse</button>
+    </div>
+    <div class="card">
+      <img src="CLEANING & STORAGE.jpg" alt="CLEANING & STORAGE">
+      <h3>Cleaning & Storage</h3>
+      <button onclick="window.location.href='CLEANING & STORAGE.html'">Browse</button>
+    </div>
+    <div class="card">
+      <img src="THERMO WARE.jpg" alt="THERMO WARE">
+      <h3>Thermo Ware</h3>
+      <button onclick="window.location.href='THERMO WARE.html'">Browse</button>
+    </div>
+    <div class="card">
+      <img src="PACKING CONTAINERS.jpg" alt="PACKING CONTAINERS">
+      <h3>Packing Containers</h3>
+      <button onclick="window.location.href='PACKING CONTAINERS.html'">Browse</button>
+    </div>
+    <div class="card">
+      <img src="PLANTERS.jpg" alt="PLANTERS">
+      <h3>Planters</h3>
+      <button onclick="window.location.href='PLANTERS.html'">Browse</button>
+    </div>
+    <div class="card">
+      <img src="INDUSTRIAL.jpg" alt="INDUSTRIAL">
+      <h3>Industrial</h3>
+      <button onclick="window.location.href='INDUSTRIAL.html'">Browse</button>
+    </div>
+  </div>
+
+  <script>
+    function browseProduct(id) {
+      alert("Now browsing Product " + id);
+      // Or redirect to product page:
+      // window.location.href = `product${id}.html`;
+    }
+  </script>
+</body>
+</html>
+

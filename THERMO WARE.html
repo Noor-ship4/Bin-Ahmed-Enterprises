@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Thermo Ware</title>
+  <style>
+ body {
+  margin: 0;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background: url('15.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
+
+   h1 {
+  text-align: center;
+  color: white;
+}
+
+    .top-buttons {
+      display: flex;
+      justify-content: flex-start;
+      gap: 10px;
+      padding: 10px;
+    }
+    .home-button, .cart-button {
+      font-size: 24px;
+      background-color: #fff;
+      padding: 10px;
+      border-radius: 50%;
+      box-shadow: 0 0 8px rgba(0,0,0,0.2);
+      cursor: pointer;
+      text-decoration: none;
+      color: black;
+    }
+    .home-button:hover, .cart-button:hover {
+      background-color: #eee;
+    }
+    .product-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+    .product-card {
+      background-color: rgba(255, 255, 255, 0.7); /* More transparent */
+      padding: 15px;
+      width: 300px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      text-align: center;
+      position: relative;
+      color: black;
+    }
+    .product-card img {
+      max-width: 100%;
+      height: 200px;
+      object-fit: contain;
+    }
+    .product-card h2 {
+      font-size: 18px;
+      color: #444;
+    }
+    .product-card p {
+      font-size: 14px;
+      color: #333;
+      margin: 5px 0;
+    }
+    .price {
+      font-weight: bold;
+      color: #000;
+      margin-top: 10px;
+    }
+    .btn {
+      margin: 5px;
+      padding: 5px 15px;
+      border: none;
+      background-color: #a94442;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .delete-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: transparent;
+      border: none;
+      font-size: 22px;
+      color: red;
+      cursor: pointer;
+    }
+    .delete-btn:hover {
+      color: darkred;
+    }
+  </style>
+</head>
+<body>
+  <div class="top-buttons">
+    <a class="home-button" href="product.html" title="Back to Home">🏠</a>
+    <a class="cart-button" href="Shopping Cart.html" title="View Cart">🛒</a>
+  </div>
+
+  <h1>Thermo Ware</h1>
+
+  <div class="product-grid" id="productGrid"></div>
+
+  <script>
+    const products = [
+  { id: 1, name: "REHLA CASSEROLE - 1 Pcs. Set", img: "THERMO WARE1.jpg", code: "50006", volume: "0.167 CBM Per Carton", description: "295x295x190 (2.7 Ltr)", price: "4.000 OMR", packing: "1 Pcs. In Carton" },
+  { id: 2, name: "REHLA CASSEROLE -  1 Pcs", img: "THERMO WARE2.jpg", code: "50020", volume: "0.166 CBM Per Carton", description: "365x365x190 (5.0 Ltr)", price: "4.300 OMR", packing: "1 Pcs. In Carton" },
+  { id: 3, name: "REHLA CASSEROLE -  2 Pcs", img: "THERMO WARE3.jpg", code: "50549", volume: "0.120 CBM Per Carton", description: "370x370x170 (7.5 Ltr)", price: "7.300 OMR", packing: "1 Pcs. In Carton" },
+  { id: 4, name: "REHLA CASSEROLE -  1 Pcs", img: "THERMO WARE4.jpg", code: "50556", volume: "0.120 CBM Per Carton", description: "410x410x170 (10 Ltr)", price: "3.000 OMR", packing: "1 Pcs. In Carton" },
+  { id: 5, name: "ROYALE CASSEROLE -  1 Pcs", img: "THERMO WARE5.jpg", code: "51119", volume: "0.102 CBM Per Carton", description: "255x230x140 (2 Ltr)", price: "3.000 OMR", packing: "1 Pcs. In Carton" },
+  { id: 6, name: "REHLA CASSEROLE - 1 Pcs", img: "THERMO WARE6.jpg", code: "50013", volume: "2.114 CBM Per Carton", description: "315x315x205 (3.5 Ltr)", price: "13.000 OMR", packing: "1 Pcs. In Carton" },
+  { id: 7, name: "ROYALE CASSEROLE - 4 Pcs", img: "THERMO WARE7.jpg", code: "51102", volume: "0.102 CBM Per Carton", description: "390x250x140 (2.7 Ltr)", price: "7.000 OMR", packing: "1 Pcs. In Carton" },
+  { id: 8, name: "ROYALE CASSEROLE - 5 Pcs", img: "THERMO WARE8.jpg", code: "51096", volume: "0.102 CBM Per Carton", description: "440x290x160 (3.5 Ltr)", price: "6.000 OMR", packing: "1 Pcs. In Carton" },
+  { id: 9, name: "ROYALE CASSEROLE - 1 Pcs", img: "THERMO WARE9.jpg", code: "50778", volume: "0.128 CBM Per Carton", description: "495x325x160 (5 Ltr)", price: "2.000 OMR", packing: " Pcs. In Carton" },
+  { id: 10, name: "CHEF - 1 Pcs", img: "THERMO WARE10.jpg", code: "51805", volume: "0.089 CBM Per Carton", description: "495x325x160 (5 Ltr)", price: "5.900 OMR", packing: "1 Pcs. In Carton" },
+  { id: 11, name: "CHEF - 1 Pcs", img: "THERMO WARE11.jpg", code: "51812", volume: "0.111 CBM Per Carton", description: "495x325x160 (5 Ltr)", price: "6.890 OMR", packing: "1 Pcs. In Carton" },
+  { id: 12, name: "ENVOY CASSEROLE - 3 Pcs. Set", img: "THERMO WARE12.jpg", code: "50570", volume: "0.119 CBM Per Carton", description: "255x255x290 (1 Ltr, 1.5 Ltr, 2.1 Ltr)", price: "18.800 OMR", packing: "1 Sets In Carton" },
+  { id: 13, name: "SUHUR CASSEROLE - 3 Pcs. Set", img: "THERMO WARE13.jpg", code: "51201", volume: "0.163 CBM Per Carton", description: "310x310x270 (1 Ltr, 1.5 Ltr, 2.5 Ltr, 5Ltr)", price: "18.800 OMR", packing: "1 Sets In Carton" },
+  { id: 14, name: "ZAHRA CASSEROLE - 1 Pcs", img: "THERMO WARE14.jpg", code: "53410", volume: "0.095 CBM Per Carton", description: "2.5 Ltr", price: "3.000 OMR", packing: "1 Pcs. In Carton" },
+  { id: 15, name: "ZAHRA CASSEROLE - 2 Pcs", img: "THERMO WARE15.jpg", code: "53427", volume: "0.112 CBM Per Carton", description: "3.5 Ltr", price: "5.500 OMR", packing: "1 Pcs. In Carton" },
+  { id: 16, name: "SNACK BOX 1 Pcs", img: "THERMO WARE16.jpg", code: "52659", volume: "0.044 CBM Per Carton", description: "155x150x70", price: "1.500 OMR", packing: "1 Pcs. In Carton" }
+];
+
+    const counts = {};
+
+    function renderProducts() {
+      const container = document.getElementById('productGrid');
+      container.innerHTML = "";
+      products.forEach(product => {
+        counts[product.id] = 0;
+        const card = document.createElement("div");
+        card.className = "product-card";
+        card.id = "product-" + product.id;
+        card.innerHTML = `
+          <button class="delete-btn" onclick="decreaseCount(${product.id})">🗑️</button>
+          <img src="${product.img}" alt="${product.name}">
+          <h2>${product.name}</h2>
+          <p><strong>Code:</strong> ${product.code}</p>
+          <p><strong>Volume:</strong> ${product.volume}</p>
+          <p><strong>Size & Capacity:</strong> ${product.description}</p>
+          <p><strong>Packing:</strong> ${product.packing}</p>
+          <p class="price">Price: ${product.price}</p>
+          <p>Selected: <span id="count${product.id}">0</span> times</p>
+          <button class="btn" onclick="increaseCount(${product.id})">Select Product</button>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function increaseCount(id) {
+      counts[id]++;
+      document.getElementById("count" + id).innerText = counts[id];
+      const product = products.find(p => p.id === id);
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      let existing = cart.find(item => item.id === product.id);
+      if (existing) {
+        existing.count += 1;
+      } else {
+        cart.push({
+          id: product.id,
+          name: product.name,
+          price: parseFloat(product.price),
+          count: 1,
+          img: product.img
+        });
+      }
+      localStorage.setItem('cart', JSON.stringify(cart));
+    }
+
+    function decreaseCount(id) {
+      if (counts[id] > 0) {
+        counts[id]--;
+        document.getElementById("count" + id).innerText = counts[id];
+        const product = products.find(p => p.id === id);
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        let index = cart.findIndex(item => item.id === product.id);
+        if (index !== -1) {
+          if (cart[index].count > 1) {
+            cart[index].count--;
+          } else {
+            cart.splice(index, 1);
+          }
+          localStorage.setItem('cart', JSON.stringify(cart));
+        }
+      } else {
+        alert("This product has not been selected yet.");
+      }
+    }
+
+    renderProducts();
+  </script>
+</body>
+</html>

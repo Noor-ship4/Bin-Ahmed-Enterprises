@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Shopping Cart & Checkout</title>
+<style>
+  body { background-color: #f1dfce; font-family: Arial, sans-serif; padding: 20px; }
+  h1 { text-align: center; color: #fff; }
+  table { width: 100%; border-collapse: collapse; margin-top: 20px; background: white; box-shadow: 0 0 10px rgba(0,0,0,0.1); border-radius: 10px; overflow: hidden; }
+  th, td { padding: 15px; text-align: center; border-bottom: 1px solid #ddd; }
+  th { background-color: #a94442; color: white; font-size: 18px; }
+  td img { width: 80px; height: 80px; object-fit: cover; border-radius: 5px; }
+  .quantity-controls button { padding: 6px 10px; margin: 0 4px; font-size: 16px; cursor: pointer; background-color: #a94442; color: white; border: none; border-radius: 5px; }
+  .quantity-controls button:hover { background-color: #7f3434; }
+  .remove-btn { cursor: pointer; color: red; font-weight: bold; font-size: 24px; border: none; background: none; transition: color 0.3s ease; }
+  .remove-btn:hover { color: darkred; }
+  .total-row td { font-weight: bold; font-size: 18px; color: #a94442; }
+  .empty-msg { text-align: center; margin-top: 40px; font-size: 22px; color: #555; }
+  .back-btn { display: inline-block; margin-top: 30px; padding: 10px 20px; background-color: #a94442; color: white; text-decoration: none; border-radius: 5px; font-size: 16px; }
+  .back-btn:hover { background-color: #7f3434; }
+
+  .checkout-section { background: #fff; margin-top: 30px; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+  .checkout-section h2 { margin-top: 0; color: #a94442; }
+  .checkout-section label { display: block; margin-top: 15px; margin-bottom: 5px; }
+  .checkout-section input, .checkout-section select { width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc; }
+  .place-order-btn { margin-top: 20px; padding: 10px 20px; background: #a94442; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; }
+  .place-order-btn:hover { background: #7f3434; }
+  iframe { width: 100%; height: 300px; border: 0; margin-top: 10px; border-radius: 10px; }
+</style>
+</head>
+<body>
+
+<h1>Shopping Cart</h1>
+
+<table id="cartTable" style="display: none;">
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>Price (OMR)</th>
+      <th>Quantity</th>
+      <th>Total</th>
+      <th>Remove</th>
+    </tr>
+  </thead>
+  <tbody id="cartBody"></tbody>
+  <tfoot>
+    <tr class="total-row">
+      <td colspan="3">Grand Total</td>
+      <td id="totalPrice">0.000 OMR</td>
+      <td></td>
+    </tr>
+  </tfoot>
+</table>
+
+<p id="emptyMessage" class="empty-msg">Your cart is empty.</p>
+<a href="offers page.html" class="back-btn">← Back to Offers</a>
+<a href="product.html" class="back-btn">← Back to Our Products</a>
+
+<div class="checkout-section" id="checkoutSection" style="display: none;">
+  <h2>Checkout</h2>
+  
+  <label for="email">Email</label>
+  <input type="email" id="email" placeholder="Enter your email" />
+
+  <label for="phone">Phone Number</label>
+  <input type="tel" id="phone" placeholder="Enter your phone number" />
+
+  <label for="address">Delivery Address</label>
+  <input type="text" id="address" placeholder="Enter your address" />
+
+  <label for="location">Your Location (link or GPS)</label>
+  <div style="display: flex; gap: 10px;">
+    <input type="text" id="location" placeholder="Enter your location" style="flex: 1;" readonly />
+    <button type="button" onclick="getLocation()">Get Location</button>
+  </div>
+  <div id="mapContainer"></div>
+
+  <label for="payment">Payment Method</label>
+  <select id="payment" onchange="toggleCardInput()">
+    <option value="Cash on Delivery">Cash on Delivery</option>
+    <option value="Card">Card</option>
+  </select>
+
+  <div id="cardSection" style="display: none;">
+    <label for="cardNumber">Card Number</label>
+    <input type="password" id="cardNumber" placeholder="Enter card number" maxlength="16" />
+  </div>
+
+  <button class="place-order-btn" onclick="placeOrder()">Place Order</button>
+</div>
+
+<script>
+function loadCart() {
+  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+  const cartTable = document.getElementById('cartTable');
+  const cartBody = document.getElementById('cartBody');
+  const emptyMessage = document.getElementById('emptyMessage');
+  const totalPriceElem = document.getElementById('totalPrice');
+  const checkoutSection = document.getElementById('checkoutSection');
+
+  if (cart.length === 0) {
+    cartTable.style.display = 'none';
+    emptyMessage.style.display = 'block';
+    checkoutSection.style.display = 'none';
+    return;
+  }
+
+  cartTable.style.display = 'table';
+  emptyMessage.style.display = 'none';
+  checkoutSection.style.display = 'block';
+  cartBody.innerHTML = '';
+
+  let total = 0;
+
+  cart.forEach((item, index) => {
+    const price = parseFloat(item.price);
+    const itemTotal = price * item.count;
+    total += itemTotal;
+
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><img src="${item.img}" alt="${item.name}" /><br>${item.name}</td>
+      <td>${price.toFixed(3)}</td>
+      <td>
+        <div class="quantity-controls">
+          <button onclick="decreaseQuantity(${index})">-</button>
+          ${item.count}
+          <button onclick="increaseQuantity(${index})">+</button>
+        </div>
+      </td>
+      <td>${itemTotal.toFixed(3)} OMR</td>
+      <td><button class="remove-btn" onclick="removeItem(${index})">🗑️</button></td>
+    `;
+    cartBody.appendChild(tr);
+  });
+
+  totalPriceElem.innerText = total.toFixed(3) + ' OMR';
+}
+
+function increaseQuantity(index) {
+  let cart = JSON.parse(localStorage.getItem('cart')) || [];
+  cart[index].count++;
+  localStorage.setItem('cart', JSON.stringify(cart));
+  loadCart();
+}
+
+function decreaseQuantity(index) {
+  let cart = JSON.parse(localStorage.getItem('cart')) || [];
+  if (cart[index].count > 1) {
+    cart[index].count--;
+  } else {
+    cart.splice(index, 1);
+  }
+  localStorage.setItem('cart', JSON.stringify(cart));
+  loadCart();
+}
+
+function removeItem(index) {
+  let cart = JSON.parse(localStorage.getItem('cart')) || [];
+  cart.splice(index, 1);
+  localStorage.setItem('cart', JSON.stringify(cart));
+  loadCart();
+}
+
+function toggleCardInput() {
+  const payment = document.getElementById('payment').value;
+  const cardSection = document.getElementById('cardSection');
+  cardSection.style.display = payment === 'Card' ? 'block' : 'none';
+}
+
+function placeOrder() {
+  const email = document.getElementById('email').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const address = document.getElementById('address').value.trim();
+  const location = document.getElementById('location').value.trim();
+  const payment = document.getElementById('payment').value;
+  const cardNumber = document.getElementById('cardNumber').value.trim();
+
+  // Validation
+  if (!email || !phone || !address || !location) {
+    alert('Please fill in all the required fields!');
+    return;
+  }
+
+  if (payment === 'Card' && !cardNumber) {
+    alert('Please enter your card number!');
+    return;
+  }
+
+  let summary = "Order Summary:\n";
+  summary += `Email: ${email}\n`;
+  summary += `Phone: ${phone}\n`;
+  summary += `Address: ${address}\n`;
+  summary += `Location: ${location}\n`;
+  summary += `Payment: ${payment}\n`;
+  if (payment === 'Card') {
+    summary += `Card Number: ${'*'.repeat(cardNumber.length)} (hidden)\n`;
+  }
+
+  alert(summary);
+  localStorage.removeItem('cart');
+  window.location.href = "THANK.html";
+}
+
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition((position) => {
+      const lat = position.coords.latitude;
+      const lon = position.coords.longitude;
+      const loc = `https://www.google.com/maps?q=${lat},${lon}`;
+      document.getElementById('location').value = loc;
+      document.getElementById('mapContainer').innerHTML = 
+        `<iframe src="https://www.google.com/maps?q=${lat},${lon}&hl=es;z=14&output=embed"></iframe>`;
+    }, () => {
+      alert('Error getting location.');
+    });
+  } else {
+    alert('Geolocation not supported.');
+  }
+}
+
+window.onload = loadCart;
+</script>
+
+</body>
+</html>

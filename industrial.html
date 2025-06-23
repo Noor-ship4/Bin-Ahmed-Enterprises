@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>INDUSTRIAL</title>
+  <style>
+ body {
+  margin: 0;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background: url('18.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
+
+   h1 {
+  text-align: center;
+  color: white;
+}
+
+    .top-buttons {
+      display: flex;
+      justify-content: flex-start;
+      gap: 10px;
+      padding: 10px;
+    }
+    .home-button, .cart-button {
+      font-size: 24px;
+      background-color: #fff;
+      padding: 10px;
+      border-radius: 50%;
+      box-shadow: 0 0 8px rgba(0,0,0,0.2);
+      cursor: pointer;
+      text-decoration: none;
+      color: black;
+    }
+    .home-button:hover, .cart-button:hover {
+      background-color: #eee;
+    }
+    .product-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+    .product-card {
+      background-color: rgba(255, 255, 255, 0.7); /* More transparent */
+      padding: 15px;
+      width: 300px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      text-align: center;
+      position: relative;
+      color: black;
+    }
+    .product-card img {
+      max-width: 100%;
+      height: 200px;
+      object-fit: contain;
+    }
+    .product-card h2 {
+      font-size: 18px;
+      color: #444;
+    }
+    .product-card p {
+      font-size: 14px;
+      color: #333;
+      margin: 5px 0;
+    }
+    .price {
+      font-weight: bold;
+      color: #000;
+      margin-top: 10px;
+    }
+    .btn {
+      margin: 5px;
+      padding: 5px 15px;
+      border: none;
+      background-color: #a94442;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .delete-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: transparent;
+      border: none;
+      font-size: 22px;
+      color: red;
+      cursor: pointer;
+    }
+    .delete-btn:hover {
+      color: darkred;
+    }
+  </style>
+</head>
+<body>
+  <div class="top-buttons">
+    <a class="home-button" href="product.html" title="Back to Home">🏠</a>
+    <a class="cart-button" href="Shopping Cart.html" title="View Cart">🛒</a>
+  </div>
+  <h1>INDUSTRIAL </h1>
+
+  <div class="product-grid" id="productGrid"></div>
+
+  <script>
+    const products = [
+     
+  {
+    id: 1,
+    name: "PET BOTTLE HANDLES",
+    img: "img125.jpg",
+    code: "52444",
+    packing: "1 Pcs. In Carton",
+    volume: "Not Specified",
+    dimension: "Not Specified",
+    price: "0.500 OMR"
+  },
+  {
+    id: 2,
+    name: "CORE PLUG",
+    img: "img128.jpg",
+    code: "52039, 52046",
+    packing: "1 Pcs. In Carton",
+    volume: "Not Specified",
+    dimension: "70, 145 mm",
+    price: "1.200 OMR"
+  },
+  {
+    id: 3,
+    name: "NUMBER PLATE COVER",
+    img: "img127.jpg",
+    code: "50303",
+    packing: "1 Pcs. In Carton",
+    volume: "Not Specified",
+    dimension: "530x135x15",
+    price: "0.400 OMR"
+  },
+  {
+    id: 4,
+      name: "PET BOTTLE HANDLES",
+    img: "img126.jpg",
+    code: "52459",
+    packing: "1 Pcs. In Carton",
+    volume: "Not Specified",
+    dimension: "Not Specified",
+    price: "0.300 OMR"
+  },
+  {
+    id: 5,
+      name: "TIN CONTAINER LID WITH SEAL",
+    img: "img129.jpg",
+    code: "53007",
+    packing: "1 Pcs. In Carton",
+    volume: "Not Specified",
+    dimension: "195x15",
+    price: "0.600 OMR"
+  },
+ {
+ id: 6,
+      name: "MULTIPURPOSE CRATE",
+    img: "img130.jpg",
+    code: "52192",
+    packing: "1Pic",
+    volume: "Not Specified",
+    dimension: "580x370x210",
+    price: "1.900 OMR"
+  },
+{
+    id: 7,
+    name: "INSECT TRAP",
+    img: "img139.jpg",
+    code: "54493",
+    packing: "1 pcs in Carton",
+    volume: "0.120 CBM Per Carton",
+    dimension: "Not Specified",
+    price: "1.300 OMR"
+  },
+{
+    id: 8,
+    name: "TRANSPORT CRATE",
+    img: "img131.jpg",
+    code: "52208",
+    packing: "1 pic",
+    volume: "Not Specified",
+    dimension: "585x455x180",
+    price: "1.400"
+  },
+{
+ id: 9,
+    name: "PET BOTTLE CAP",
+    img: "img133.jpg",
+    code: "Not Specified",
+    packing: "1 Pcs. In Carton",
+    volume: "Not Specified",
+    dimension: "40, 45, 55, 95mm  ",
+    price: "0.300"
+  },
+ {
+    id: 10,
+    name: "END CAP WITH HOLE",
+    img: "img135.jpg",
+    code: "Not Specified",
+    packing: "1 Pcs. In Carton",
+    volume: "Not Specified",
+    dimension: "1/2”, 3/4”, 1 “, 1.5”, 1.25”, 3” & 4”",
+    price: "0.200"
+  },
+ {
+    id: 11,
+    name: "FLYING DISK",
+    img: "img136.jpg",
+    code: "50785",
+    packing: "1 Pcs. In Carton",
+    volume: "Not Specified",
+    dimension: "Not Specified",
+    price: "0.400"
+  },
+ {
+    id: 12,
+    name: "AEROSOL CANISTER CAP",
+    img: "img134.jpg",
+    code: "Not Specified",
+    packing: "1 Pcs. In Carton",
+    volume: "Not Specified",
+    dimension: "35, 52, 57mm(Double wall)",
+    price: "0.600"
+  },
+ {
+    id: 13,
+    name: "PVC PIPE RING",
+    img: "img137.jpg",
+    code: "Not Specified",
+    packing: "1 Pcs. In Carton",
+    volume: "Not Specified",
+    dimension: "Not Specified",
+    price: "0.300"
+  },
+ {
+    id: 14,
+    name: "PALLET",
+    img: "img138.jpg",
+    code: "52635",
+    packing: "1 Pcs. In Carton",
+    volume: "Not Specified",
+    dimension: "815x410x125",
+    price: "1.200"
+  },
+
+   {
+    id: 15,
+    name: "FISH CRATE",
+    img: "img132.jpg",
+    code: "51980",
+    packing: "1 Pic",
+    volume: "Not Specified",
+    dimension: "600x400x350",
+    price: "2.000"
+  },
+
+    ];
+
+    const counts = {};
+
+    function renderProducts() {
+      const container = document.getElementById('productGrid');
+      container.innerHTML = "";
+      products.forEach(product => {
+        counts[product.id] = 0;
+        const card = document.createElement("div");
+        card.className = "product-card";
+        card.id = "product-" + product.id;
+        card.innerHTML = `
+          <button class="delete-btn" onclick="decreaseCount(${product.id})">🗑️</button>
+          <img src="${product.img}" alt="${product.name}">
+          <h2>${product.name}</h2>
+          <p><strong>Code:</strong> ${product.code}</p>
+          <p><strong>Volume:</strong> ${product.volume}</p>
+          <p><strong>Size & Capacity:</strong> ${product.description}</p>
+          <p><strong>Packing:</strong> ${product.packing}</p>
+          <p class="price">Price: ${product.price}</p>
+          <p>Selected: <span id="count${product.id}">0</span> times</p>
+          <button class="btn" onclick="increaseCount(${product.id})">Select Product</button>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function increaseCount(id) {
+      counts[id]++;
+      document.getElementById("count" + id).innerText = counts[id];
+      const product = products.find(p => p.id === id);
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      let existing = cart.find(item => item.id === product.id);
+      if (existing) {
+        existing.count += 1;
+      } else {
+        cart.push({
+          id: product.id,
+          name: product.name,
+          price: parseFloat(product.price),
+          count: 1,
+          img: product.img
+        });
+      }
+      localStorage.setItem('cart', JSON.stringify(cart));
+    }
+
+    function decreaseCount(id) {
+      if (counts[id] > 0) {
+        counts[id]--;
+        document.getElementById("count" + id).innerText = counts[id];
+        const product = products.find(p => p.id === id);
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        let index = cart.findIndex(item => item.id === product.id);
+        if (index !== -1) {
+          if (cart[index].count > 1) {
+            cart[index].count--;
+          } else {
+            cart.splice(index, 1);
+          }
+          localStorage.setItem('cart', JSON.stringify(cart));
+        }
+      } else {
+        alert("This product has not been selected yet.");
+      }
+    }
+
+    renderProducts();
+  </script>
+</body>
+</html>
